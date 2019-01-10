@@ -8,15 +8,15 @@ class WebCam():
 
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
-        self.width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        self.height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.fps = cap.get(cv2.CAP_PROP_FPS)
+        self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        self.fps = self.cap.get(cv2.CAP_PROP_FPS)
         
     def process(self, frame):
         return frame
 
     def run(self):
-        n_labels = width * height * 3
+        n_labels = self.width * self.height * 3
         sys.stdout.write("Capturing from webcam at " + str(self.width) + 'x' + str(self.height) + " pixels, " + str(self.fps) + " Hz\n")
 
         counter = 0
@@ -49,7 +49,7 @@ class WebCam():
 
         # When everything done, release the capture
         sys.stdout.write('\n')
-        cap.release()
+        self.cap.release()
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":

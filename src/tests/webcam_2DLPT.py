@@ -1,25 +1,28 @@
 import numpy as np
 import cv2
-#from filters.copy_frame import process_frame
-from transform.dwt_color import forward as dwt
-from transform.dwt_color import backward as idwt
+import sys
+
+sys.path.insert(0, "..")
+sys.path.insert(1, "../..")
+from DWT import DWT
 from webcam import WebCam
 
 class WebCam_2DLPT(WebCam):
-    def init_structures(self, y, x):
-        self.zero_L = np.zeros((y, x), np.float64)
-        
+
+    def __init__(self):
+        super().__init__()
+        self.dwt = DWT()
+        self.zero_L = np.zeros((self.height//2, self.width//2, 3), np.float64)
+
     def process(self, frame):
-        LL, LH, HL, HH = dwt(frame)
-        H = idwt(self.zero_L, LH, HL, HH)
+        LL, H = self.dwt.forward(frame)
+        _H = self.dwt.backward((self.zero_L, H))
         cv2.imshow('LL', LL.astype(np.uint8))
-        cv2.imshow('H', H.astype(np.uint8)*16+128)
-        _, LH, HL, HH = dwt(H)
-        H = LH, HL, HH
-        recons = idwt(LL, H)
+        cv2.imshow('H', _H.astype(np.uint8)*16+128)
+        _, H = self.dwt.forward(_H)
+        recons = self.dwt.backward((LL, H))
         return recons.astype(np.uint8)
 
 if __name__ == "__main__":
     driver = WebCam_2DLPT()
-    
     driver.run()

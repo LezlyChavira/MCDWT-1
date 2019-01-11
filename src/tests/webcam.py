@@ -8,8 +8,8 @@ class WebCam():
 
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
-        self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         self.fps = self.cap.get(cv2.CAP_PROP_FPS)
         if __debug__:
             print("WebCam: width={} height={} FPS={}".format(self.width, self.height, self.fps))

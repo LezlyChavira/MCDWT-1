@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
-
 import sys
+
 sys.path.insert(0, "..")
 sys.path.insert(1, "../..")
 from DWT import DWT
@@ -10,6 +10,7 @@ from webcam import WebCam
 #from filters.copy_frame import process_frame
 
 class WebCam_2DDWT(WebCam):
+
     def __init__(self):
         super().__init__()
         self.dwt = DWT()

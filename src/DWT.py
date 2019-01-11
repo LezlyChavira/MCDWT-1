@@ -164,7 +164,7 @@ if __name__ == "__main__":
             print("Backward transform")
         p = pyramid.read("{}".format(args.pyramid))
         i = dwt.backward(p)
-        i = np.rint(i)
+        #i = np.rint(i)
         image.write(i, "{}".format(args.image))
     else:
         if __debug__:
@@ -172,8 +172,9 @@ if __name__ == "__main__":
         i = image.read("{}".format(args.image))
         p = dwt.forward(i)
         print(type(p[0]))
-        LL = np.rint(p[0])
-        LH = np.rint(p[1][0])
-        HL = np.rint(p[1][1])
-        HH = np.rint(p[1][2])
-        pyramid.write((LL, (LH, HL, HH)), "{}".format(args.pyramid))
+        #LL = np.rint(p[0])
+        #LH = np.rint(p[1][0])
+        #HL = np.rint(p[1][1])
+        #HH = np.rint(p[1][2])
+        #pyramid.write((LL, (LH, HL, HH)), "{}".format(args.pyramid))
+        pyramid.write(p, "{}".format(args.pyramid))

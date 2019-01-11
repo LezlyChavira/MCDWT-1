@@ -63,7 +63,7 @@ class MDWT:
         for i in range(N):
             pyr = pyramid.read("{}{:03d}".format(S, i))
             img = self.dwt.backward(pyr)
-            image.write8(img, "{}{:03d}".format(s, i))
+            image.write(img, "{}{:03d}".format(s, i))
 
     #    s = []
     #    for pyramid in S:
@@ -80,6 +80,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description = "Motion 2D Discrete Wavelet (color) Transform\n\n"
         "Examples:\n\n"
+        "  rm -rf /tmp/stockholm/\n"
         "  cp -rf ../sequences/stockholm/ /tmp/\n"
         "  ./MDWT.py    -i /tmp/stockholm/ -p /tmp/stockholm_ # Forward transform\n"
         "  ./MDWT.py -b -i /tmp/stockholm_ -p /tmp/stockholm_ # Backward transform\n",

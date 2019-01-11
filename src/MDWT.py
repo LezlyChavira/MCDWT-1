@@ -38,10 +38,6 @@ class MDWT:
             img = image.read("{}{:03d}".format(s, i))
             pyr = self.dwt.forward(img)
             pyramid.write(pyr, "{}{:03d}".format(S, i))
-    #    S = Sequence()
-    #    for image in s:
-    #        S.append(DWT(image))
-    #    return S
 
     def backward(self, S="/tmp/stockholm_", s="/tmp/stockholm_", N=5):
         ''' Motion 1-iteration forward 2D DWT of a sequence of pyramids.
@@ -64,11 +60,6 @@ class MDWT:
             pyr = pyramid.read("{}{:03d}".format(S, i))
             img = self.dwt.backward(pyr)
             image.write(img, "{}{:03d}".format(s, i))
-
-    #    s = []
-    #    for pyramid in S:
-    #        s.append(iDWT(pyramid))
-    #    return s
 
 if __name__ == "__main__":
 

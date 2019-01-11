@@ -116,7 +116,7 @@ simplicity, we will denote the subbands $\{LH^k, HL^k, HH^k\}$ as only
 $H^k$, and $LL^k$ as only $L^k$. More information at
 \href{https://pywavelets.readthedocs.io/en/latest/index.html}{PyWavelets}.
 
-\section{Motion DWT}
+\section{Motion DWT (MDWT)}
 As said before, a
 \href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{2D-DWT}
 (2 Dimensions - Discrete Wavelet Transform) generates a scalable
@@ -133,7 +133,7 @@ exploited. All the temporal redundancy is still in the video.
 \end{figure}
 \lstinputlisting[language=python]{../src/MDWT.py}
 
-\subsection{Scalability}
+\subsection{Scalability in MDWT}
 The 2D-DWT applied to a video produces a scalable representation in the
 space (we can extract different videos with different spatial scales or
 resolutions), in the time (we can extract diferent videos with different
@@ -162,7 +162,7 @@ spatial dimension). To reconstruct the scale 1 (which is provided by the
 subbands $\{LL^2, LH^2, HL^2, HH^2\}$), we must apply the 2D-iDWT
 (1-levels 2D inverse DWT).
 
-\subsection{Redundancy and (previsible) compression}
+\subsection{Redundancy and (previsible) compression in MDWT}
 The 2D-DWT incorporates to $S$ an interesting feature: usually,
 $H$ subbands has a lower entropy than $s$. This means that
 if we apply to $S$ an entropy encoder, we can get a shorter
@@ -171,7 +171,7 @@ is a consequence of that 2D-DWT removes (most of) the spatial redudancy
 of the images of the video (neighboring pixels tend to have similar
 values and their substraction tends to produce zeros).
 
-\section{Removing temporal redundancy with MCDWT?}
+\section{Removing temporal redundancy with MCDWT}
 As we have said, the 2D-DWT does not exploit the temporal redundancy of
 a video. Consequently, we can achieve higher compression ratios (in
 addition to the 2D-DWT) if we apply a 1D-DWT along the temporal domain.

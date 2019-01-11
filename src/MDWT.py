@@ -81,7 +81,7 @@ if __name__ == "__main__":
         description = "Motion 2D Discrete Wavelet (color) Transform\n\n"
         "Examples:\n\n"
         "  rm -rf /tmp/stockholm/\n"
-        "  cp -rf ../sequences/stockholm/ /tmp/\n"
+        "  cp -r ../sequences/stockholm/ /tmp/\n"
         "  ./MDWT.py    -i /tmp/stockholm/ -p /tmp/stockholm_ # Forward transform\n"
         "  ./MDWT.py -b -i /tmp/stockholm_ -p /tmp/stockholm_ # Backward transform\n",
         formatter_class=CustomFormatter)

@@ -329,15 +329,17 @@ if __name__ == "__main__":
 
     class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
         pass
-    
+
+#        "  yes | cp -rf ../sequences/stockholm/ /tmp/\n"
     parser = argparse.ArgumentParser(
         description = "Motion Compensated 2D Discrete Wavelet (color) Transform\n\n"
         "Examples:\n\n"
-        "  yes | cp -rf ../sequences/stockholm/ /tmp/\n"
-        "  ./MDWT.py -i /tmp/stockholm/ -p /tmp/stockholm_\n"
-        "  ./MCDWT.py    -p /tmp/stockholm_ -m /tmp/mc_stockholm_ # Forward transform\n"
-        "  ./MCDWT.py -b -p /tmp/stockholm_ -m /tmp/mc_stockholm_ # Backward transform\n",
-        "  ./MDWT.py -b -i /tmp/stockholm_ -p /tmp/stockholm_\n"
+        "  rm -rf /tmp/stockholm/\n"
+        "  cp -r ../sequences/stockholm/ /tmp/\n"
+        "  python3 -O ./MDWT.py     -i /tmp/stockholm/ -p /tmp/stockholm_\n"
+        "  python3 -O ./MCDWT.py    -p /tmp/stockholm_ -m /tmp/mc_stockholm_ # Forward transform\n"
+        "  python3 -O ./MCDWT.py -b -p /tmp/stockholm_ -m /tmp/mc_stockholm_ # Backward transform\n"
+        "  python3 -O ./MDWT.py  -b -i /tmp/stockholm_ -p /tmp/stockholm_\n",
         formatter_class=CustomFormatter)
 
     parser.add_argument("-b", "--backward", action='store_true',
@@ -347,7 +349,7 @@ if __name__ == "__main__":
                         help="Sequence of pyramids", default="/tmp/stockholm_")
 
     parser.add_argument("-m", "--mc_pyramids",
-                        help="Sequence motion compensated pyramids", default="/tmp/mc_stockholm_")
+                        help="Sequence of motion compensated pyramids", default="/tmp/mc_stockholm_")
 
     parser.add_argument("-N",
                         help="Number of pyramids", default=5, type=int)
@@ -368,7 +370,7 @@ if __name__ == "__main__":
     else:
         if __debug__:
             print("Forward transform")
-            
+
         p = pyramid.readL("{}000".format(args.pyramids))
         d = MCDWT(p.shape)
 

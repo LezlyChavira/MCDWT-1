@@ -6,58 +6,60 @@ class InputFileException(Exception):
     pass
 
 def read(file_name):
-    '''Read an image from disk.
+    '''Read a 3-components image from disk. Each component stores
+       integers between [0, 65535].
 
     Parameters
     ----------
 
         image : str.
 
-            Image in the file system, without extension.
+            Path to the image in the file system, without extension.
 
     Returns
     -------
 
         [:,:,:].
 
-            A color image.
+            A color image, where each component is in the range [-32768, 32767].
 
     '''
-
-    #file_name += "_LL.png"
     image = cv2.imread(file_name, -1)
     if image is None:
         raise InputFileException('{} not found'.format(file_name))
     else:
         if __debug__:
             print("image.py: read {}".format(file_name))
-    buf = image.astype(np.float64)
-    #buf -= 32768
-    #assert (np.amax(buf) < 32767), 'range overflow'
-    #assert (np.amin(buf) >= -32768), 'range underflow'
-    return buf
+    buf = image.astype(np.float32)
+    buf -= 32768.0
+    #assert (np.amax(buf) < 65536), 'range overflow'
+    #assert (np.amin(buf) >= 0), 'range underflow'
+    return buf.astype(np.int16)
 
 def write(image, file_name, bpc):
-    '''Write an image to disk.
+    '''Write a 3-components image to disk. Each component stores integers
+       between [0, 65536].
 
     Parameters
     ----------
 
         image : [:,:,:].
 
-            The color image to write.
+            The color image to write, where each component is in the range [-32768, 32768].
 
         file_name : str.
 
-            Image in the file system, without extension.
+            Path to the image in the file system, without extension.
 
     Returns
     -------
 
         None.
-
     '''
 
+    image = image.astype(np.float32)
+    image += 32768.0
+    image = image.astype(np.uint16)
     #tmp = np.copy(image)
     #tmp += 32768
 
@@ -72,7 +74,14 @@ def write(image, file_name, bpc):
         print("image.py: written {} using {}".format(file_name + ".png", bpc))
 
 def write8(image, file_name):
+    np.clip(image, 0, 255)
     write(image, file_name, np.uint8)
 
 def write16(image, file_name):
     write(image, file_name, np.uint16)
+
+if __name__ == "__main__":
+
+    img = read("../../sequences/stockholm/000")
+    write(img, "/tmp/000")
+    print("generated /tmp/000")

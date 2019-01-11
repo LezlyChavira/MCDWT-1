@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Note: swap the above line with the following two ones to switch
-# between the standar and the optimized mode.
+# between the standard and the optimized mode.
 
 #!/bin/sh
 ''''exec python3 -O -- "$0" ${1+"$@"} # '''
@@ -21,7 +21,7 @@ from src.IO import pyramid
 class DWT:
 
     def forward(self, image):
-        '''2D 1-iteration forward DWT of a color image.
+        '''Forward 1-iteration 2D-DWT of a color image.
 
         Input:
         -----
@@ -30,35 +30,39 @@ class DWT:
 
                   x
              +---------------+
-             |               |-+ component
-           y |               | |-+
-             |               | | |
-             |               | | |
-             |               | | |
-             |               | | |
-             |               | | |
-             +---------------+ | |
-               +---------------+ |
+             |              Y|-+ component
+           y |               |U|-+
+             |               | |V|
+             |             or| | |
+             |               |r| |
+             |               | |r|
+             |              R| | |
+             +---------------+G| |
+               +---------------+B|
                  +---------------+
 
 
         Output:
         ------
 
-            pyramid: a tuple (L, H), where L  (low-frequencies subband) is an array[y, x, component], and H (high-frequencies subbands) is a tuple (LH, HL, HH), where LH, HL, HH are array[y, x, component], with the color pyramid.
+            a pyramid: a tuple (L, H), where L (low-frequencies subband)
+            is an array[y, x, component], and H (high-frequencies
+            subbands) is a tuple (LH, HL, HH), where LH, HL, HH are
+            array[y, x, component], with the color pyramid.
 
                  x
              +-------+-------+
-             |       |       |-+ component
-           y |  LL   |  HL   | |-+
-             |       |       | | |
+             |       |      Y|-+ component
+           y |  LL   |  HL   |U|-+
+             |       |       | |U|
              +-------+-------+ | |
              |       |       |-+ |
              |  LH   |  HH   | |-+
-             |       |       | | |
-             +-------+-------+ | |
-               +-------+-------+ |
+             |       |      R| | |
+             +-------+-------+G| |
+               +-------+-------+B|
                  +-------+-------+
+
         '''
 
         if __debug__:
@@ -91,7 +95,6 @@ class DWT:
         pyramid = LL, (LH, HL, HH)
         return pyramid
 
-    #def backward(I = "/tmp/p000.png", i = "/tmp/i000.png"):
     def backward(self, pyramid):
         '''2D 1-iteration inverse DWT of a color pyramid.
 
@@ -103,9 +106,9 @@ class DWT:
         Output:
         ------
 
-            image: the inversely transformed image (see forward transform).
-        '''
+            an image: the inversely transformed image (see forward transform).
 
+        '''
         LL = pyramid[0]
         LH = pyramid[1][0]
         HL = pyramid[1][1]

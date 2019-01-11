@@ -10,7 +10,7 @@
 \maketitle
 \section{Intro}
 
-\textcolor{red}{MCDWT} is a multiresolution
+MCDWT is a multiresolution
 \href{https://en.wikipedia.org/wiki/Video}{video} transform. The input
 sequence of \href{https://en.wikipedia.org/wiki/Pixel}{pixels} are
 \href{https://en.wikipedia.org/wiki/Decorrelation}{decorrelated} in
@@ -22,28 +22,29 @@ have a smaller \href{https://en.wikipedia.org/wiki/Entropy}{entropy}
 than the original pixels, and the information is represented by
 temporal and spatial
 \href{https://en.wikipedia.org/wiki/Image_resolution}{resolution
-  levels}.
+  levels}. In MCDWT (and in general, in video coding):
 
 \begin{itemize}
 \item
-  In MCDWT (and in general, in video coding) temporal decorrelation is
-  provided by
-  \href{https://en.wikipedia.org/wiki/Motion_compensation}{MC (Motion
-  Compensation)}, where the
-  \href{https://en.wikipedia.org/wiki/Decoder}{prediction images} are
-  generated with an algorithm that uses only the information available
-  at the \href{https://en.wikipedia.org/wiki/Decoder}{decoder}.
+  \textbf{Temporal decorrelation} is provided
+  by \href{https://en.wikipedia.org/wiki/Motion_compensation}{MC
+  (Motion Compensation)}, where
+  the \href{https://en.wikipedia.org/wiki/Decoder}{prediction images}
+  are generated with an algorithm that uses only the information
+  available at
+  the \href{https://en.wikipedia.org/wiki/Decoder}{decoder}.
 \item
-  Spatial decorrelation is performed by the
+  \textbf{Spatial decorrelation} is performed by the
   \href{https://en.wikipedia.org/wiki/Digital_filter\#Analysis_techniques}{analysis
   filtering} used in the
   \href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{2D-DWT}.
 \end{itemize}
 
 \section{Video \href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}}
-MCDWT inputs a \href{https://en.wikipedia.org/wiki/Video}{video} and
-outputs a video, in a way that when only a portion of the data of the
-transformed video is used, a video with a lower
+MCDWT inputs a \href{https://en.wikipedia.org/wiki/Video}{video} (a
+sequence of images) and outputs a video (a sequece of pyramids), in
+such a way that when only a portion of the data of the transformed
+video is used, a video with a lower
 \href{https://en.wikipedia.org/wiki/Temporal_resolution}{temporal
 resolution}, lower
 \href{https://en.wikipedia.org/wiki/Image_resolution\#Spatial_resolution}{spatial
@@ -51,13 +52,12 @@ resolution} or/and lower
 \href{https://en.wikipedia.org/wiki/Compression_artifact}{quality} can
 be generated.
 
-If all the transformed data is used, then the original video is restored
-(MCDWT is a lossless transform). The forward transform's output has
-exactly the same number of elements than the input video (for example,
-no extra motion fields are produced). At this time, we will focuse only
-on spatial
-\href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}.
-Other types of scabilities will be addressed later.
+If all the transformed data is used, then the original video is
+restored (MCDWT is a lossless transform). The forward transform's
+output has exactly the same number of pyramids than images are in the
+input video (for example, no extra motion fields are produced). At
+this time, we will focuse only on spatial
+\href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}. Window Of Interest (WOI) and quality scabilities will be addressed later.
 
 \section{Video transform alternatives}
 To obtain a multiresolution version or a video, the

@@ -11,13 +11,16 @@ class WebCam():
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.fps = self.cap.get(cv2.CAP_PROP_FPS)
+        if __debug__:
+            print("WebCam: width={} height={} FPS={}".format(self.width, self.height, self.fps))
         
     def process(self, frame):
         return frame
 
     def run(self):
         n_labels = self.width * self.height * 3
-        sys.stdout.write("Capturing from webcam at " + str(self.width) + 'x' + str(self.height) + " pixels, " + str(self.fps) + " Hz\n")
+        if __debug__:
+            print("Capturing from webcam at " + str(self.width) + 'x' + str(self.height) + " pixels, " + str(self.fps) + " Hz\n")
 
         counter = 0
         start = time()

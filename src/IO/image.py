@@ -32,11 +32,9 @@ def read(file_name):
             print("image.py: read {}".format(file_name))
     buf = image.astype(np.float32)
     buf -= 32768.0
-    #assert (np.amax(buf) < 65536), 'range overflow'
-    #assert (np.amin(buf) >= 0), 'range underflow'
     return buf.astype(np.int16)
 
-def write(image, file_name, bpc):
+def write(image, file_name):
     '''Write a 3-components image to disk. Each component stores integers
        between [0, 65536].
 
@@ -60,25 +58,10 @@ def write(image, file_name, bpc):
     image = image.astype(np.float32)
     image += 32768.0
     image = image.astype(np.uint16)
-    #tmp = np.copy(image)
-    #tmp += 32768
-
-    #assert (np.amax(tmp) < 65536), '16 bit unsigned int range overflow'
-    #assert (np.amin(tmp) >= 0), '16 bit unsigned int range underflow'
-
-    #cv2.imwrite(file_name + "_LL.png", np.rint(tmp).astype(np.uint16))
-    #file_name += "_LL.png"
-    cv2.imwrite(file_name + ".png", np.rint(image).astype(bpc))
+    cv2.imwrite(file_name + ".png", image)
     os.rename(file_name + ".png", file_name)
     if __debug__:
-        print("image.py: written {} using {}".format(file_name + ".png", bpc))
-
-def write8(image, file_name):
-    np.clip(image, 0, 255)
-    write(image, file_name, np.uint8)
-
-def write16(image, file_name):
-    write(image, file_name, np.uint16)
+        print("image.py: written {}".format(file_name + ".png"))
 
 if __name__ == "__main__":
 

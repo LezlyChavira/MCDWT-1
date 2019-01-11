@@ -88,7 +88,7 @@ class DWT:
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
 
-        pyramid = (LL, (LH, HL, HH))
+        pyramid = LL, (LH, HL, HH)
         return pyramid
 
     #def backward(I = "/tmp/p000.png", i = "/tmp/i000.png"):
@@ -158,20 +158,22 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    d = DWT()
+    dwt = DWT()
     if args.backward:
         if __debug__:
             print("Backward transform")
         p = pyramid.read("{}".format(args.pyramid))
-        i = d.backward(p)
-        np.clip(i, 0, 255)
-        image.write8(i, "{}".format(args.image))
+        i = dwt.backward(p)
+        i = np.rint(i)
+        image.write(i, "{}".format(args.image))
     else:
         if __debug__:
             print("Forward transform")
         i = image.read("{}".format(args.image))
-        #for y in range(50):
-        #    for x in range(50):
-        #        print(i[y+50,x+50,0], end=' ')
-        p = d.forward(i)
-        pyramid.write(p, "{}".format(args.pyramid))
+        p = dwt.forward(i)
+        print(type(p[0]))
+        LL = np.rint(p[0])
+        LH = np.rint(p[1][0])
+        HL = np.rint(p[1][1])
+        HH = np.rint(p[1][2])
+        pyramid.write((LL, (LH, HL, HH)), "{}".format(args.pyramid))

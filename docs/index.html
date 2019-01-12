@@ -39,9 +39,9 @@ href="#x1-30003" id="QQ2-1-3">Video transform alternatives</a></span>
 <br />   <span class="sectionToc" >4 <a 
 href="#x1-40004" id="QQ2-1-4">Wavelet and pyramid domains</a></span>
 <br />   <span class="sectionToc" >5 <a 
-href="#x1-50005" id="QQ2-1-6">Motion DWT (MDWT)</a></span>
+href="#x1-70005" id="QQ2-1-8">Motion DWT (MDWT)</a></span>
 <br />   <span class="sectionToc" >6 <a 
-href="#x1-80006" id="QQ2-1-11">MCDWT</a></span>
+href="#x1-100006" id="QQ2-1-13">MCDWT</a></span>
    </div>
    <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-10001"></a>Intro</h3>
@@ -2742,19 +2742,124 @@ display="inline" ><msup><mrow
 ><mi 
 >k</mi></mrow></msup 
 ></math>.
-More information at <a 
-href="https://pywavelets.readthedocs.io/en/latest/index.html" >PyWavelets</a>.
-</p><!--l. 119--><p class="noindent" >
+</p><!--l. 118--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
- id="x1-50005"></a>Motion DWT (MDWT)</h3>
-<!--l. 120--><p class="noindent" >As said before, a <a 
-href="https://en.wikipedia.org/wiki/Discrete_wavelet_transform" >2D-DWT</a> (2 Dimensions - Discrete Wavelet Transform) generates
-a scalable representation of an image and by extension, of a video if we
-apply the DWT to all the images of the video. This is done, for example, in
+   <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
+ id="x1-50004.1"></a>Spatial scalability in a DWT pyramid</h4>
+<!--l. 119--><p class="noindent" >The 2D-DWT apllied to an image produces a scalable representation in the space (we can
+extract diﬀerent image with diﬀerent spatial scale or resolutions). For example, the scale
+<!--l. 121--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mn>2</mn></math> of an
+image <!--l. 121--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+></math> that
                                                                   
 
                                                                   
+has been transformed using the 2D-DWT of 2 levels will be represented by the subband
+<!--l. 123--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><msup><mrow 
+><mi 
+>L</mi></mrow><mrow 
+><mn>2</mn></mrow></msup 
+></math>, the scale
+<!--l. 123--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mn>1</mn></math> by the
+subband <!--l. 124--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><mi 
+>L</mi> <mo 
+class="MathClass-rel">=</mo> <mstyle 
+class="text"><mtext  >iDWT</mtext></mstyle><mrow ><mo 
+class="MathClass-open">(</mo><mrow><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><msup><mrow 
+><mi 
+>L</mi></mrow><mrow 
+><mn>2</mn></mrow></msup 
+><mo 
+class="MathClass-punc">,</mo><msub><mrow 
+><mi 
+>S</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><msup><mrow 
+><mi 
+>H</mi></mrow><mrow 
+><mn>2</mn></mrow></msup 
+></mrow><mo 
+class="MathClass-close">)</mo></mrow></math>, and
+the scale <!--l. 124--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mn>0</mn></math>
+(the original resolution of the image) by the subband
+<!--l. 125--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><msup><mrow 
+><mi 
+>L</mi></mrow><mrow 
+><mn>0</mn></mrow></msup 
+> <mo 
+class="MathClass-rel">=</mo> <mstyle 
+class="text"><mtext  >iDWT</mtext></mstyle><mrow ><mo 
+class="MathClass-open">(</mo><mrow><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><mi 
+>L</mi><mo 
+class="MathClass-punc">,</mo><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>1</mn></mrow></msub 
+><mo 
+class="MathClass-punc">.</mo><mi 
+>H</mi></mrow><mo 
+class="MathClass-close">)</mo></mrow></math>. More
+information at <a 
+href="https://pywavelets.readthedocs.io/en/latest/index.html" >PyWavelets</a>.
+</p><!--l. 129--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">4.2   </span> <a 
+ id="x1-60004.2"></a>Redundancy and (previsible) compression with DWT</h4>
+<!--l. 130--><p class="noindent" >DWT reduces the entropy of the high-frequency subbands as a consequece of that the
+spatial redundancy is exploited by the anaylsis ﬁlters used by the 2D-DWT.
+Compared to the direct lossless compression of the images, DWT usually increments
+(at least slightly) the lossless compressio ratio.
+</p><!--l. 136--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-70005"></a>Motion DWT (MDWT)</h3>
+<!--l. 137--><p class="noindent" >As said before, a <a 
+href="https://en.wikipedia.org/wiki/Discrete_wavelet_transform" >2D-DWT</a> (2 Dimensions - Discrete Wavelet Transform) generates
+a scalable representation of an image and by extension, of a video if we
+apply the DWT to all the images of the video. This is done, for example, in
 the <a 
 href="https://en.wikipedia.org/wiki/JPEG_2000" >motion JPEG2000 video compression standard</a>. Notice that only the
 spatial redundancy is exploited. All the temporal redundancy is still in the
@@ -2766,36 +2871,36 @@ video.
 
                                                                   
 <a 
- id="x1-50011"></a>
+ id="x1-70011"></a>
                                                                   
 
                                                                   
-<!--l. 131--><p class="noindent" > <div style="text-align:center;"> <img width=400 src="graphics/forward_MDWT.svg" /> </div> 
+<!--l. 148--><p class="noindent" > <div style="text-align:center;"> <img width=400 src="graphics/forward_MDWT.svg" /> </div> 
 <br /> </p><div class="caption" 
 ><span class="id">Figure 1: </span><span  
-class="content">Forward MDWT step.</span></div><!--tex4ht:label?: x1-50011 -->
+class="content">Forward MDWT step.</span></div><!--tex4ht:label?: x1-70011 -->
                                                                   
 
                                                                   
    </div><hr class="endfigure" />
-   <!--l. 134--><div class="lstinputlisting">
+   <!--l. 151--><div class="lstinputlisting">
 <a 
- id="x1-5002r2"></a>
+ id="x1-7002r2"></a>
 <a 
- id="x1-5003"></a>
+ id="x1-7003"></a>
 <br /> <div class="caption" 
 ><span class="id">Listing 2: </span><span  
-class="content">MDWT.py</span></div><!--tex4ht:label?: x1-5002r5 --><span 
+class="content">MDWT.py</span></div><!--tex4ht:label?: x1-7002r5 --><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5004r1"></a></span><span 
+ id="x1-7004r1"></a></span><span 
 class="ectt-1000">class</span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000">MDWT</span><span 
 class="ectt-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5005r2"></a></span><span 
+ id="x1-7005r2"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5006r3"></a></span><span 
+ id="x1-7006r3"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -2807,7 +2912,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">self</span><span 
 class="ectt-1000">):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5007r4"></a></span><span 
+ id="x1-7007r4"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -2825,9 +2930,9 @@ class="ectt-1000"> </span><span
 class="ectt-1000">DWT</span><span 
 class="ectt-1000">()</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5008r5"></a></span><span 
+ id="x1-7008r5"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5009r6"></a></span><span 
+ id="x1-7009r6"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -2863,7 +2968,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">N</span><span 
 class="ectt-1000">=5):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5010r7"></a></span><span 
+ id="x1-7010r7"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -2897,9 +3002,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">images</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5011r8"></a></span><span 
+ id="x1-7011r8"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5012r9"></a></span><span 
+ id="x1-7012r9"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -2932,9 +3037,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">s</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5013r10"></a></span><span 
+ id="x1-7013r10"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5014r11"></a></span><span 
+ id="x1-7014r11"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -2946,7 +3051,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000">Input</span><span 
 class="ecit-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5015r12"></a></span><span 
+ id="x1-7015r12"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -2957,9 +3062,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">-----</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5016r13"></a></span><span 
+ id="x1-7016r13"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5017r14"></a></span><span 
+ id="x1-7017r14"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -2990,9 +3095,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">transformed</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5018r15"></a></span><span 
+ id="x1-7018r15"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5019r16"></a></span><span 
+ id="x1-7019r16"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3004,7 +3109,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000">Output</span><span 
 class="ecit-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5020r17"></a></span><span 
+ id="x1-7020r17"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3015,9 +3120,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">------</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5021r18"></a></span><span 
+ id="x1-7021r18"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5022r19"></a></span><span 
+ id="x1-7022r19"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3047,9 +3152,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">images</span><span 
 class="ecit-1000">).</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5023r20"></a></span><span 
+ id="x1-7023r20"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5024r21"></a></span><span 
+ id="x1-7024r21"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3060,7 +3165,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">’’’</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5025r22"></a></span><span 
+ id="x1-7025r22"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3080,7 +3185,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">N</span><span 
 class="ectt-1000">):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5026r23"></a></span><span 
+ id="x1-7026r23"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3115,7 +3220,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">i</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5027r24"></a></span><span 
+ id="x1-7027r24"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3141,7 +3246,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">img</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5028r25"></a></span><span 
+ id="x1-7028r25"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3175,9 +3280,9 @@ class="ectt-1000"> </span><span
 class="ectt-1000">i</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5029r26"></a></span><span 
+ id="x1-7029r26"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5030r27"></a></span><span 
+ id="x1-7030r27"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3212,7 +3317,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">N</span><span 
 class="ectt-1000">=5):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5031r28"></a></span><span 
+ id="x1-7031r28"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3246,9 +3351,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">pyramids</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5032r29"></a></span><span 
+ id="x1-7032r29"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5033r30"></a></span><span 
+ id="x1-7033r30"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3283,9 +3388,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">S</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5034r31"></a></span><span 
+ id="x1-7034r31"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5035r32"></a></span><span 
+ id="x1-7035r32"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3297,7 +3402,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000">Input</span><span 
 class="ecit-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5036r33"></a></span><span 
+ id="x1-7036r33"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3308,9 +3413,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">-----</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5037r34"></a></span><span 
+ id="x1-7037r34"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5038r35"></a></span><span 
+ id="x1-7038r35"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3341,9 +3446,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">transformed</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5039r36"></a></span><span 
+ id="x1-7039r36"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5040r37"></a></span><span 
+ id="x1-7040r37"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3355,7 +3460,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000">Output</span><span 
 class="ecit-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5041r38"></a></span><span 
+ id="x1-7041r38"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3366,9 +3471,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">------</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5042r39"></a></span><span 
+ id="x1-7042r39"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5043r40"></a></span><span 
+ id="x1-7043r40"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3393,9 +3498,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">images</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5044r41"></a></span><span 
+ id="x1-7044r41"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5045r42"></a></span><span 
+ id="x1-7045r42"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -3406,9 +3511,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">’’’</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5046r43"></a></span><span 
+ id="x1-7046r43"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5047r44"></a></span><span 
+ id="x1-7047r44"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3428,7 +3533,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">N</span><span 
 class="ectt-1000">):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5048r45"></a></span><span 
+ id="x1-7048r45"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3463,7 +3568,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">i</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5049r46"></a></span><span 
+ id="x1-7049r46"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3489,7 +3594,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">pyr</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-5050r47"></a></span><span 
+ id="x1-7050r47"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3525,128 +3630,25 @@ class="ectt-1000">))</span>
    
    </div>
    <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
- id="x1-60005.1"></a>Scalability in MDWT</h4>
-<!--l. 137--><p class="noindent" >The 2D-DWT applied to a video produces a scalable representation in the space (we
-can extract diﬀerent videos with diﬀerent spatial scales or resolutions), in
-the time (we can extract diferent videos with diﬀerent number of frames),
-and in quality (we can get the DWT coeﬃcients with diﬀerent quantization
-steps to reconstruct videos of diﬀerent quality). For example, subbands
-<!--l. 143--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">{</mo><mrow><msub><mrow 
-><mi 
->S</mi></mrow><mrow 
-><mn>0</mn></mrow></msub 
-><mo 
-class="MathClass-punc">.</mo><mi 
->L</mi><msup><mrow 
-><mi 
->L</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-><mo 
-class="MathClass-punc">,</mo><msub><mrow 
-><mi 
->S</mi></mrow><mrow 
-><mn>1</mn></mrow></msub 
-><mo 
-class="MathClass-punc">.</mo><mi 
->L</mi><msup><mrow 
-><mi 
->L</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-><mo 
-class="MathClass-punc">,</mo><mo 
-class="MathClass-punc">.</mo><mo 
-class="MathClass-punc">.</mo><mo 
-class="MathClass-punc">.</mo><mo 
-class="MathClass-punc">,</mo><msub><mrow 
-><mi 
->S</mi></mrow><mrow 
-><mi 
->N</mi><mo 
-class="MathClass-bin">−</mo><mn>1</mn></mrow></msub 
-><mo 
-class="MathClass-punc">.</mo><mi 
->L</mi><msup><mrow 
-><mi 
->L</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-></mrow><mo 
-class="MathClass-close">}</mo></mrow></math> represent
-the scale (number) 2 of the original video (the spatial resolution of this is the resolution of
-<!--l. 160--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->s</mi></math> divided
-by 4 in each spatial dimension). To reconstruct the scale 1 (which is provided by the
-subbands <!--l. 162--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">{</mo><mrow><mi 
->L</mi><msup><mrow 
-><mi 
->L</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-><mo 
-class="MathClass-punc">,</mo><mi 
->L</mi><msup><mrow 
-><mi 
->H</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-><mo 
-class="MathClass-punc">,</mo><mi 
->H</mi><msup><mrow 
-><mi 
->L</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-><mo 
-class="MathClass-punc">,</mo><mi 
->H</mi><msup><mrow 
-><mi 
->H</mi></mrow><mrow 
-><mn>2</mn></mrow></msup 
-></mrow><mo 
-class="MathClass-close">}</mo></mrow></math>),
-we must apply the 2D-iDWT (1-levels 2D inverse DWT).
-</p><!--l. 165--><p class="noindent" >
+ id="x1-80005.1"></a>Scalabilities in MDWT</h4>
+<!--l. 154--><p class="noindent" >MDWT pyramid sequences are scalable in space and in time. The ﬁrst one is
+a inmediate consequence of that MCDWT is the use of the DWT to all
+the images of a sequence. On the other hand, it is trivial to observe that
+MDWT provides fully temporal scalability (we can access to the images
+randomly).
+</p><!--l. 160--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
- id="x1-70005.2"></a>Redundancy and (previsible) compression in MDWT</h4>
-<!--l. 166--><p class="noindent" >The 2D-DWT incorporates to <!--l. 166--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->S</mi></math>
-an interesting feature: usually, <!--l. 166--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->H</mi></math>
-subbands has a lower entropy than <!--l. 167--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->s</mi></math>.
-This means that if we apply to <!--l. 168--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->S</mi></math>
-an entropy encoder, we can get a shorter representation of the video than if we encode
-<!--l. 169--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->s</mi></math>
-directly. This is a consequence of that 2D-DWT removes (most of) the spatial
-redudancy of the images of the video (neighboring pixels tend to have similar values
-and their substraction tends to produce zeros, which reduces the entropy and
-increases the compression ratio).
-</p><!--l. 175--><p class="noindent" >
+ id="x1-90005.2"></a>Redundancy and (previsible) compression in MDWT</h4>
+<!--l. 161--><p class="noindent" >As DWT, MDWT exploits the spatial redundancy in the image sequences. The
+compression ratios provided by MDWT will be identical to the use of DWT to each
+image of the sequence.
+</p><!--l. 165--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
- id="x1-80006"></a>MCDWT</h3>
-<!--l. 176--><p class="noindent" >As we have said, the 2D-DWT does not exploit the temporal redundancy of a video.
+ id="x1-100006"></a>MCDWT</h3>
+<!--l. 166--><p class="noindent" >As we have said, the 2D-DWT does not exploit the temporal redundancy of a video.
 Consequently, we can achieve higher compression ratios (than using MDWT) if we
-                                                                  
-
-                                                                  
 apply a 1D-DWT along the temporal domain. This is exactly what MCDWT
 does. However, owing to the temporal redundancy is generated mainly by
 the presence of objects in the scene of the video which are moving with
@@ -3656,12 +3658,15 @@ based on the idea that, to provide MC without transmitting the motion
 information from the encoder to the decoder, the motion information is
 computed at both ends, using only the information that is available at the
 decoder.
-</p><!--l. 188--><p class="noindent" >
+                                                                  
+
+                                                                  
+</p><!--l. 178--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
- id="x1-90006.1"></a>MCDWT forward butterﬂy</h4>
-<!--l. 190--><p class="noindent" >MCDWT butterly inputs three pyramids
-<!--l. 190--><math 
+ id="x1-110006.1"></a>MCDWT butterﬂy</h4>
+<!--l. 180--><p class="noindent" >MCDWT butterly inputs three pyramids
+<!--l. 180--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi> <mo 
@@ -3675,7 +3680,7 @@ class="MathClass-punc">,</mo><mi
 class="MathClass-punc">.</mo><mi 
 >H</mi></mrow><mo 
 class="MathClass-close">}</mo></mrow></math>,
-<!--l. 190--><math 
+<!--l. 180--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi> <mo 
@@ -3689,7 +3694,7 @@ class="MathClass-punc">,</mo><mi
 class="MathClass-punc">.</mo><mi 
 >H</mi></mrow><mo 
 class="MathClass-close">}</mo></mrow></math> and
-<!--l. 191--><math 
+<!--l. 181--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >c</mi> <mo 
@@ -3703,7 +3708,7 @@ class="MathClass-punc">,</mo><mi
 class="MathClass-punc">.</mo><mi 
 >H</mi></mrow><mo 
 class="MathClass-close">}</mo></mrow></math>, and outputs a
-residue subband <!--l. 192--><math 
+residue subband <!--l. 182--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
 accent="true"><mrow 
@@ -3712,18 +3717,18 @@ accent="true"><mrow
 class="MathClass-op">̃</mo></mover><mo 
 class="MathClass-punc">.</mo><mi 
 >H</mi></math>,
-which replaces to <!--l. 192--><math 
+which replaces to <!--l. 182--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi><mo 
 class="MathClass-punc">.</mo><mi 
 >H</mi></math>
-in the original <!--l. 192--><math 
+in the original <!--l. 182--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>
 pyramid. So, after the use of the buﬀerﬂy, we get
-<!--l. 193--><math 
+<!--l. 183--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi> <mo 
@@ -3736,8 +3741,8 @@ class="MathClass-punc">,</mo><mi
 >a</mi><mo 
 class="MathClass-punc">.</mo><mi 
 >H</mi></mrow><mo 
-class="MathClass-close">}</mo></mrow></math>,
-<!--l. 194--><math 
+class="MathClass-close">}</mo></mrow></math> (an intra-coded “I”
+image), <!--l. 184--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
 accent="true"><mrow 
@@ -3756,8 +3761,8 @@ accent="true"><mrow
 class="MathClass-op">̃</mo></mover><mo 
 class="MathClass-punc">.</mo><mi 
 >H</mi></mrow><mo 
-class="MathClass-close">}</mo></mrow></math> and
-<!--l. 194--><math 
+class="MathClass-close">}</mo></mrow></math> (a bidirectionally
+predicted “B” image) and <!--l. 185--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >c</mi> <mo 
@@ -3770,113 +3775,37 @@ class="MathClass-punc">,</mo><mi
 >c</mi><mo 
 class="MathClass-punc">.</mo><mi 
 >H</mi></mrow><mo 
-class="MathClass-close">}</mo></mrow></math>.
-Obviously, this replacement is fully reversible.
-</p><!--l. 197--><p class="noindent" >
-</p>
-   <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
- id="x1-100006.2"></a>Input</h4>
-<!--l. 198--><p class="noindent" >Three frames of <!--l. 198--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->s</mi></math>:
-<!--l. 198--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->a</mi></math>,
-<!--l. 198--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->b</mi></math> and
-<!--l. 198--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->c</mi></math>.
-</p><!--l. 200--><p class="noindent" >
-</p>
-   <h4 class="subsectionHead"><span class="titlemark">6.3   </span> <a 
- id="x1-110006.3"></a>Output</h4>
-<!--l. 201--><p class="noindent" >Three frames <!--l. 201--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->A</mi> <mo 
-class="MathClass-rel">=</mo> <mrow ><mo 
-class="MathClass-open">{</mo><mrow><mi 
->A</mi><mo 
-class="MathClass-punc">.</mo><mi 
->L</mi><mo 
-class="MathClass-punc">,</mo><mi 
->A</mi><mo 
-class="MathClass-punc">.</mo><mi 
->H</mi></mrow><mo 
-class="MathClass-close">}</mo></mrow></math> (intra-coded),
-<!--l. 202--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->B</mi> <mo 
-class="MathClass-rel">=</mo> <mrow ><mo 
-class="MathClass-open">{</mo><mrow><mi 
->B</mi><mo 
-class="MathClass-punc">.</mo><mi 
->L</mi><mo 
-class="MathClass-punc">,</mo><mover 
-accent="true"><mrow 
-><mi 
->B</mi></mrow><mo 
-class="MathClass-op">̃</mo></mover><mo 
-class="MathClass-punc">.</mo><mi 
->H</mi></mrow><mo 
-class="MathClass-close">}</mo></mrow></math> (bidirectionally
-predicted) and <!--l. 203--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->C</mi> <mo 
-class="MathClass-rel">=</mo> <mrow ><mo 
-class="MathClass-open">{</mo><mrow><mi 
->C</mi><mo 
-class="MathClass-punc">.</mo><mi 
->L</mi><mo 
-class="MathClass-punc">,</mo><mi 
->C</mi><mo 
-class="MathClass-punc">.</mo><mi 
->H</mi></mrow><mo 
 class="MathClass-close">}</mo></mrow></math>
-(intra-coded).
-                                                                  
-
-                                                                  
-</p><!--l. 205--><p class="noindent" >
+(an intra-coded “I” image). Obviously, this replacement is fully reversible.
 </p>
-   <h4 class="subsectionHead"><span class="titlemark">6.4   </span> <a 
- id="x1-120006.4"></a>Algorithm</h4>
    <hr class="figure" /><div class="figure" 
 >
                                                                   
 
                                                                   
 <a 
- id="x1-120012"></a>
+ id="x1-110012"></a>
                                                                   
 
                                                                   
-<!--l. 208--><p class="noindent" > <div style="text-align:center;"> <img width=800 src="graphics/forward_MCDWT.svg" /> </div> 
+<!--l. 191--><p class="noindent" > <div style="text-align:center;"> <img width=800 src="graphics/forward_butterfly.svg" /> </div> 
 <br /> </p><div class="caption" 
 ><span class="id">Figure 2: </span><span  
-class="content">Forward MCDWT butterﬂy.</span></div><!--tex4ht:label?: x1-120012 -->
+class="content">Forward MCDWT butterﬂy.</span></div><!--tex4ht:label?: x1-110012 -->
                                                                   
 
                                                                   
    </div><hr class="endfigure" />
-   <!--l. 211--><div class="lstinputlisting">
+   <!--l. 194--><div class="lstinputlisting">
 <a 
- id="x1-12002r3"></a>
+ id="x1-11002r3"></a>
 <a 
- id="x1-12003"></a>
+ id="x1-11003"></a>
 <br /> <div class="caption" 
 ><span class="id">Listing 3: </span><span  
-class="content">MCDWT.py</span></div><!--tex4ht:label?: x1-12002r6 --><span 
+class="content">MCDWT.py</span></div><!--tex4ht:label?: x1-11002r6 --><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12004r1"></a></span><span 
+ id="x1-11004r1"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3891,7 +3820,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">shape</span><span 
 class="ectt-1000">):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12005r2"></a></span><span 
+ id="x1-11005r2"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3918,7 +3847,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">float64</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12006r3"></a></span><span 
+ id="x1-11006r3"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3949,7 +3878,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_L</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12007r4"></a></span><span 
+ id="x1-11007r4"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3967,9 +3896,9 @@ class="ectt-1000"> </span><span
 class="ectt-1000">DWT</span><span 
 class="ectt-1000">()</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12008r5"></a></span><span 
+ id="x1-11008r5"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12009r6"></a></span><span 
+ id="x1-11009r6"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -3999,7 +3928,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">cH</span><span 
 class="ectt-1000">):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12010r7"></a></span><span 
+ id="x1-11010r7"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4020,9 +3949,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">butterfly</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12011r8"></a></span><span 
+ id="x1-11011r8"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12012r9"></a></span><span 
+ id="x1-11012r9"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4034,7 +3963,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000">Input</span><span 
 class="ecit-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12013r10"></a></span><span 
+ id="x1-11013r10"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4045,9 +3974,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">-----</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12014r11"></a></span><span 
+ id="x1-11014r11"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12015r12"></a></span><span 
+ id="x1-11015r12"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4091,7 +4020,7 @@ class="ecit-1000">pyramid</span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">of</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12016r13"></a></span><span 
+ id="x1-11016r13"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4114,9 +4043,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">c</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12017r14"></a></span><span 
+ id="x1-11017r14"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12018r15"></a></span><span 
+ id="x1-11018r15"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4128,7 +4057,7 @@ class="ecit-1000"> </span><span
 class="ecit-1000">Output</span><span 
 class="ecit-1000">:</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12019r16"></a></span><span 
+ id="x1-11019r16"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4139,9 +4068,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">------</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12020r17"></a></span><span 
+ id="x1-11020r17"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12021r18"></a></span><span 
+ id="x1-11021r18"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4176,7 +4105,7 @@ class="ecit-1000">pyramid</span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">of</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12022r19"></a></span><span 
+ id="x1-11022r19"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4198,9 +4127,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000">b</span><span 
 class="ecit-1000">.</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12023r20"></a></span><span 
+ id="x1-11023r20"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12024r21"></a></span><span 
+ id="x1-11024r21"></a></span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
 class="ecit-1000"> </span><span 
@@ -4211,9 +4140,9 @@ class="ecit-1000"> </span><span
 class="ecit-1000"> </span><span 
 class="ecit-1000">’’’</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12025r22"></a></span><span 
+ id="x1-11025r22"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12026r23"></a></span><span 
+ id="x1-11026r23"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4240,7 +4169,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_H</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12027r24"></a></span><span 
+ id="x1-11027r24"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4267,7 +4196,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_H</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12028r25"></a></span><span 
+ id="x1-11028r25"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4294,7 +4223,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_H</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12029r26"></a></span><span 
+ id="x1-11029r26"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4321,7 +4250,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">aH</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12030r27"></a></span><span 
+ id="x1-11030r27"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4348,7 +4277,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">bH</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12031r28"></a></span><span 
+ id="x1-11031r28"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4375,7 +4304,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">cH</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12032r29"></a></span><span 
+ id="x1-11032r29"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4399,7 +4328,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">AH</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12033r30"></a></span><span 
+ id="x1-11033r30"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4423,7 +4352,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">CH</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12034r31"></a></span><span 
+ id="x1-11034r31"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4448,7 +4377,7 @@ class="ectt-1000">/</span><span
 class="ectt-1000"> </span><span 
 class="ectt-1000">2</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12035r32"></a></span><span 
+ id="x1-11035r32"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4467,7 +4396,7 @@ class="ectt-1000">-</span><span
 class="ectt-1000"> </span><span 
 class="ectt-1000">prediction_BH</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12036r33"></a></span><span 
+ id="x1-11036r33"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4489,7 +4418,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">residue_BH</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12037r34"></a></span><span 
+ id="x1-11037r34"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4503,9 +4432,9 @@ class="ectt-1000"> </span><span
 class="ectt-1000">residue_bH</span><span 
 class="ectt-1000">[1]</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12038r35"></a></span><span 
+ id="x1-11038r35"></a></span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12039r36"></a></span><span 
+ id="x1-11039r36"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4535,7 +4464,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">cH</span><span 
 class="ectt-1000">):</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12040r37"></a></span><span 
+ id="x1-11040r37"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4562,7 +4491,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_H</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12041r38"></a></span><span 
+ id="x1-11041r38"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4589,7 +4518,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_H</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12042r39"></a></span><span 
+ id="x1-11042r39"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4616,7 +4545,7 @@ class="ectt-1000">.</span><span
 class="ectt-1000">zero_H</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12043r40"></a></span><span 
+ id="x1-11043r40"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4643,7 +4572,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">aH</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12044r41"></a></span><span 
+ id="x1-11044r41"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4670,7 +4599,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">residue_bH</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12045r42"></a></span><span 
+ id="x1-11045r42"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4697,7 +4626,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">cH</span><span 
 class="ectt-1000">))</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12046r43"></a></span><span 
+ id="x1-11046r43"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4721,7 +4650,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">AH</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12047r44"></a></span><span 
+ id="x1-11047r44"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4745,7 +4674,7 @@ class="ectt-1000"> </span><span
 class="ectt-1000">CH</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12048r45"></a></span><span 
+ id="x1-11048r45"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4770,7 +4699,7 @@ class="ectt-1000">/</span><span
 class="ectt-1000"> </span><span 
 class="ectt-1000">2</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12049r46"></a></span><span 
+ id="x1-11049r46"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4789,7 +4718,7 @@ class="ectt-1000">+</span><span
 class="ectt-1000"> </span><span 
 class="ectt-1000">prediction_BH</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12050r47"></a></span><span 
+ id="x1-11050r47"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4811,7 +4740,7 @@ class="ectt-1000">(</span><span
 class="ectt-1000">BH</span><span 
 class="ectt-1000">)</span><span 
 class="ectt-1000"> </span><br /><span class="label"><a 
- id="x1-12051r48"></a></span><span 
+ id="x1-11051r48"></a></span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
 class="ectt-1000"> </span><span 
@@ -4826,48 +4755,1816 @@ class="ectt-1000">bH</span><span
 class="ectt-1000">[1]</span>
    
    </div>
-<!--l. 213--><p class="indent" >   Notice that, even if <!--l. 213--><math 
+<!--l. 196--><p class="indent" >   Notice that, even if <!--l. 196--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>
-and <!--l. 213--><math 
+and <!--l. 196--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >c</mi></math>
 (at full resolution) are available at the decoder, only
-<!--l. 214--><math 
+<!--l. 197--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->B</mi><mo 
+>b</mi><mo 
 class="MathClass-punc">.</mo><mi 
 >L</mi></math>
 is. So, does not make sense to search the low resolution structures of
-<!--l. 215--><math 
+<!--l. 198--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->B</mi><mo 
+>b</mi><mo 
 class="MathClass-punc">.</mo><mi 
 >L</mi></math> in the high
-resolution images <!--l. 215--><math 
+resolution images <!--l. 198--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>
-and <!--l. 216--><math 
+and <!--l. 199--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >c</mi></math>,
 because even if a perfect match is achieved, the prediction error would be diﬀerent
-than <!--l. 217--><math 
+than <!--l. 200--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>0</mn></math>
-as a consequence of the high resolution information is missing in
-<!--l. 218--><math 
+as a consequence of that the high resolution information is missing in
+<!--l. 201--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->B</mi><mo 
+>b</mi><mo 
 class="MathClass-punc">.</mo><mi 
 >L</mi></math>.
 </p>
+   <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
+ id="x1-120006.2"></a>MCDWT transform</h4>
+<!--l. 205--><p class="noindent" >The MCDWT forward transform is the result of appliying the MCDWT butterﬂy
+to all the input sequence of pyramids with diﬀerent distances between the
+pyramids. As a consequence, except the ﬁrst and the last pyramid of the
+<!--l. 208--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>H</mi></math>-sequence
+are temporally decorrelated.
+</p>
+   <hr class="figure" /><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-120013"></a>
+                                                                  
+
+                                                                  
+<!--l. 212--><p class="noindent" > <div style="text-align:center;"> <img width=800 src="graphics/temporal_decorrelation.svg" /> </div> 
+<br /> </p><div class="caption" 
+><span class="id">Figure 3: </span><span  
+class="content">MCDWT forward transform.</span></div><!--tex4ht:label?: x1-120013 -->
+                                                                  
+
+                                                                  
+   </div><hr class="endfigure" />
+   <!--l. 215--><div class="lstinputlisting">
+<a 
+ id="x1-12002r4"></a>
+<a 
+ id="x1-12003"></a>
+<br /> <div class="caption" 
+><span class="id">Listing 4: </span><span  
+class="content">MCDWT.py</span></div><!--tex4ht:label?: x1-12002r6 --><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12004r1"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">def</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">forward</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">self</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">tmp</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">stockholm_</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">tmp</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">mc_stockholm_</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">N</span><span 
+class="ectt-1000">=5,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">T</span><span 
+class="ectt-1000">=2):</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12005r2"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">’’’</span><span 
+class="ecit-1000">A</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Motion</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Compensated</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Discrete</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Wavelet</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Transform</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12006r3"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12007r4"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Compute</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">the</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">MC</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">1</span><span 
+class="ecit-1000">D</span><span 
+class="ecit-1000">-</span><span 
+class="ecit-1000">DWT</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">The</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">input</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">video</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">s</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">(</span><span 
+class="ecit-1000">as</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">a</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">sequence</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">of</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12008r5"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">1-</span><span 
+class="ecit-1000">levels</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">pyramids</span><span 
+class="ecit-1000">)</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">must</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">be</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">stored</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">in</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">disk</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">and</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">the</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">output</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">(</span><span 
+class="ecit-1000">as</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">a</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12009r6"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">1-</span><span 
+class="ecit-1000">levels</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">MC</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">pyramids</span><span 
+class="ecit-1000">)</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">will</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">be</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">stored</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">in</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">S</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12010r7"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12011r8"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Imput</span><span 
+class="ecit-1000">:</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12012r9"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">-----</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12013r10"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12014r11"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">prefix</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">:</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">str</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12015r12"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12016r13"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Localization</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">of</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">the</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">input</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">output</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">images</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Example</span><span 
+class="ecit-1000">:</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12017r14"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">&#x0022;/</span><span 
+class="ecit-1000">tmp</span><span 
+class="ecit-1000">/&#x0022;.</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12018r15"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12019r16"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">N</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">:</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">int</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12020r17"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12021r18"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Number</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">of</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">images</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">to</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">process</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12022r19"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12023r20"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">K</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">:</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">int</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12024r21"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12025r22"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Number</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">of</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">levels</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">of</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">the</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">MCDWT</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">(</span><span 
+class="ecit-1000">temporal</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">scales</span><span 
+class="ecit-1000">).</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Controls</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12026r23"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">the</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">GOP</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">size</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12027r24"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12028r25"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">K</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">GOP_size</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12029r26"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">----+-----------</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12030r27"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">0</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">1</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12031r28"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">1</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">2</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12032r29"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">2</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">4</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12033r30"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">3</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">8</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12034r31"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">4</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">16</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12035r32"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">5</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">32</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12036r33"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">:</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">|</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">:</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12037r34"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12038r35"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Returns</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12039r36"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">-------</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12040r37"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12041r38"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">None</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12042r39"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12043r40"></a></span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">’’’</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12044r41"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">2</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12045r42"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">for</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">t</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">in</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">range</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">T</span><span 
+class="ectt-1000">):</span><span 
+class="ectt-1000"> </span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Temporal</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">scale</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12046r43"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">0</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12047r44"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">0))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12048r45"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">((</span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000">),</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">0))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12049r46"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">while</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x003C;</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">N</span><span 
+class="ectt-1000">//</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">):</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12050r47"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">//2))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12051r48"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12052r49"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">self</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">__forward_butterfly</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000">)</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12053r50"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">((</span><span 
+class="ectt-1000">bL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000">),</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">//2))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12054r51"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">((</span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000">),</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12055r52"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12056r53"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">+=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">1</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12057r54"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">*=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">2</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12058r55"></a></span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12059r56"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">def</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">backward</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">self</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">tmp</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">mc_stockholm_</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">tmp</span><span 
+class="ectt-1000">/</span><span 
+class="ectt-1000">stockholm_</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">N</span><span 
+class="ectt-1000">=5,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">T</span><span 
+class="ectt-1000">=2):</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12060r57"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">2**</span><span 
+class="ectt-1000">T</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12061r58"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">for</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">t</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">in</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">range</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">T</span><span 
+class="ectt-1000">):</span><span 
+class="ectt-1000"> </span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">Temporal</span><span 
+class="ecit-1000"> </span><span 
+class="ecit-1000">scale</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12062r59"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">0</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12063r60"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">0))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12064r61"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">((</span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000">),</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">0))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12065r62"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">while</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x003C;</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">N</span><span 
+class="ectt-1000">//</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">):</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12066r63"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">//2))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12067r64"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">S</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12068r65"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">self</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">__backward_butterfly</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000">)</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12069r66"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">((</span><span 
+class="ectt-1000">bL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">bH</span><span 
+class="ectt-1000">),</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">//2))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12070r67"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">pyramid</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">((</span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000">),</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">{}{:03</span><span 
+class="ectt-1000">d</span><span 
+class="ectt-1000">}</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">format</span><span 
+class="ectt-1000">(</span><span 
+class="ectt-1000">s</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000">))</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12071r68"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">aH</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cL</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">cH</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12072r69"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">i</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">+=</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">1</span><span 
+class="ectt-1000"> </span><br /><span class="label"><a 
+ id="x1-12073r70"></a></span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">x</span><span 
+class="ectt-1000"> </span><span 
+class="ectt-1000">//=2</span>
+   
+   </div>
+<!--l. 217--><p class="indent" >   MCDWT provides dyadic temporal scalability. For example, if only one step of
+the backward transform is applied to the previous example, only the pyramids
+<!--l. 217--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>0</mn></mrow></msub 
+></math>,
+<!--l. 217--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>2</mn></mrow></msub 
+></math> and
+<!--l. 217--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msub><mrow 
+><mi 
+>s</mi></mrow><mrow 
+><mn>4</mn></mrow></msub 
+></math> will
+be reconstructed. If the second step of the backward transform is used, all the
+pyramids are rendered.
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">6.3   </span> <a 
+ id="x1-130006.3"></a>Scalabilitiy in MCDWT</h4>
+<!--l. 220--><p class="noindent" >The structure of subbands generated by the MCDWT is identical to MDWT.
+Therefore, MCDWT provides an identical spatial scalability than MDWT. In order
+to obtain several spatial resolutions, MDWT+MCDWT should be applied to
+the low-frequency subbands, recursively. As an example, in the Figure <a 
+href="#x1-130014">4<!--tex4ht:ref: fig:multiresolution --></a>,
+MDWT+MCDWT has been applied to the output of the example of the
+Figure <a 
+href="#x1-120013">3<!--tex4ht:ref: fig:forward_MCDWT --></a>.
+</p>
+   <hr class="figure" /><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-130014"></a>
+                                                                  
+
+                                                                  
+<!--l. 230--><p class="noindent" > <div style="text-align:center;"> <img width=800 src="graphics/multiresolution.svg" /> </div> 
+<br /> </p><div class="caption" 
+><span class="id">Figure 4: </span><span  
+class="content">MDWT+MCDWT multiresolution procedure.</span></div><!--tex4ht:label?: x1-130014 -->
+                                                                  
+
+                                                                  
+   </div><hr class="endfigure" />
     
 </body> 
 </html>

@@ -73,8 +73,8 @@ class MCDWT:
         1-levels pyramids) must be stored in disk and the output (as a
         1-levels MC pyramids) will be stored in S.
 
-        Arguments
-        ---------
+        Imput:
+        -----
 
             prefix : str
 

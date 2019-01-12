@@ -113,8 +113,25 @@ respectively.
 The 1-iteration 2D-DWT can be applied $k$-times to the $LL$ subband
 recursively, generating a pyramid of $k+1$-levels. For the sake of
 simplicity, we will denote the subbands $\{LH^k, HL^k, HH^k\}$ as only
-$H^k$, and $LL^k$ as only $L^k$. More information at
+$H^k$, and $LL^k$ as only $L^k$.
+
+\subsection{Spatial scalability in a DWT pyramid}
+The 2D-DWT apllied to an image produces a scalable representation in
+the space (we can extract different image with different spatial scale
+or resolutions). For example, the scale $2$ of an image $s_1$ that has
+been transformed using the 2D-DWT of 2 levels will be represented by
+the subband $s_1.L^2$, the scale $1$ by the subband
+$s_1.L=\text{iDWT}(s_1.L^2, S_1.H^2)$, and the scale $0$ (the original
+resolution of the image) by the subband $s_1.L^0=\text{iDWT}(s_1.L,
+s_1.H)$. More information at
 \href{https://pywavelets.readthedocs.io/en/latest/index.html}{PyWavelets}.
+
+\subsection{Redundancy and (previsible) compression with DWT}
+DWT reduces the entropy of the high-frequency subbands as a consequece
+of that the spatial redundancy is exploited by the anaylsis filters
+used by the 2D-DWT. Compared to the direct lossless compression of the
+images, DWT usually increments (at least slightly) the lossless
+compressio ratio.
 
 \section{Motion DWT (MDWT)}
 As said before, a
@@ -133,44 +150,17 @@ exploited. All the temporal redundancy is still in the video.
 \end{figure}
 \lstinputlisting[firstline=16, lastline=62, language=python, caption=MDWT.py]{../src/MDWT.py}
 
-\subsection{Scalability in MDWT}
-The 2D-DWT applied to a video produces a scalable representation in the
-space (we can extract different videos with different spatial scales or
-resolutions), in the time (we can extract diferent videos with different
-number of frames), and in quality (we can get the DWT coefficients with
-different quantization steps to reconstruct videos of different
-quality). For example, subbands
-$\{S_0.LL^2, S_1.LL^2, ..., S_{N-1}.LL^2\}$
-% in
-%
-%\begin{verbatim}
-%+---+---+-------+  +---+---+-------+     +---+---+-------+
-%|LL2|HL2|       |  |   |   |       |     |   |   |       |
-%+---+---+  HL1  |  +---+---+       |     +---+---+       |
-%|LH2|HH2|       |  |   |   |       |     |   |   |       |
-%+---+---+-------+  +---+---+-------+ ... +---+---+-------+
-%|       |       |  |       |       |     |       |       |
-%|  LH1  |  HH1  |  |       |       |     |       |       |
-%|       |       |  |       |       |     |       |       |        
-%+-------+-------+  +-------+-------+     +-------+-------+
-%      S[0]               S[1]                  S[N-1]
-%\end{verbatim}
-%
-represent the scale (number) 2 of the original video (the spatial
-resolution of this is the resolution of $s$ divided by 4 in each
-spatial dimension). To reconstruct the scale 1 (which is provided by the
-subbands $\{LL^2, LH^2, HL^2, HH^2\}$), we must apply the 2D-iDWT
-(1-levels 2D inverse DWT).
+\subsection{Scalabilities in MDWT}
+MDWT pyramid sequences are scalable in space and in time. The first
+one is a inmediate consequence of that MCDWT is the use of the DWT to
+all the images of a sequence. On the other hand, it is trivial to
+observe that MDWT provides fully temporal scalability (we can access
+to the images randomly).
 
 \subsection{Redundancy and (previsible) compression in MDWT}
-The 2D-DWT incorporates to $S$ an interesting feature: usually, $H$
-subbands has a lower entropy than $s$. This means that if we apply to
-$S$ an entropy encoder, we can get a shorter representation of the
-video than if we encode $s$ directly. This is a consequence of that
-2D-DWT removes (most of) the spatial redudancy of the images of the
-video (neighboring pixels tend to have similar values and their
-substraction tends to produce zeros, which reduces the entropy and
-increases the compression ratio).
+As DWT, MDWT exploits the spatial redundancy in the image
+sequences. The compression ratios provided by MDWT will be identical
+to the use of DWT to each image of the sequence.
 
 \section{MCDWT}
 As we have said, the 2D-DWT does not exploit the temporal redundancy
@@ -185,7 +175,7 @@ provide MC without transmitting the motion information from the
 encoder to the decoder, the motion information is computed at both
 ends, using only the information that is available at the decoder.
 
-\subsection{MCDWT forward butterfly}
+\subsection{MCDWT butterfly}
 
 MCDWT butterly inputs three pyramids $a=\{a.L, a.H\}$, $b=\{b.L,
 b.H\}$ and $c=\{c.L, c.H\}$, and outputs a residue subband
@@ -198,7 +188,7 @@ reversible.
 
 \begin{figure}
 \centering
-\imgw{800}{graphics/forward_MCDWT.svg}
+\imgw{800}{graphics/forward_butterfly.svg}
 \caption{Forward MCDWT butterfly.}
 \end{figure}
 \lstinputlisting[firstline=20, lastline=67, language=python, caption=MCDWT.py]{../src/MCDWT.py}
@@ -209,6 +199,37 @@ low resolution structures of $b.L$ in the high resolution images $a$
 and $c$, because even if a perfect match is achieved, the prediction
 error would be different than $0$ as a consequence of that the high
 resolution information is missing in $b.L$.
+
+\subsection{MCDWT transform}
+
+The MCDWT forward transform is the result of appliying the MCDWT
+butterfly to all the input sequence of pyramids with different
+distances between the pyramids. As a consequence, except the first and
+the last pyramid of the $H$-sequence are temporally decorrelated.
+
+\begin{figure}
+\centering
+\imgw{800}{graphics/temporal_decorrelation.svg}
+\caption{MCDWT forward transform.\label{fig:forward_MCDWT}}
+\end{figure}
+\lstinputlisting[firstline=69, lastline=138, language=python, caption=MCDWT.py]{../src/MCDWT.py}
+
+MCDWT provides dyadic temporal scalability. For example, if only one step of the backward transform is applied to the previous example, only the pyramids $s_0$, $s_2$ and $s_4$ will be reconstructed. If the second step of the backward transform is used, all the pyramids are rendered.
+
+\subsection{Scalabilitiy in MCDWT}
+The structure of subbands generated by the MCDWT is identical to
+MDWT. Therefore, MCDWT provides an identical spatial scalability than
+MDWT. In order to obtain several spatial resolutions, MDWT+MCDWT
+should be applied to the low-frequency subbands, recursively. As an
+example, in the Figure~\ref{fig:multiresolution}, MDWT+MCDWT has been
+applied to the output of the example of the
+Figure~\ref{fig:forward_MCDWT}.
+
+\begin{figure}
+\centering
+\imgw{800}{graphics/multiresolution.svg}
+\caption{MDWT+MCDWT multiresolution procedure.\label{fig:multiresolution}}
+\end{figure}
 
 \end{document}
 

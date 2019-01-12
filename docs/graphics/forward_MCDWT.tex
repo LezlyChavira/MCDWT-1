@@ -31,53 +31,45 @@
 \begin{tikzpicture}[auto, >=triangle 45]
 
   \draw
-  node [block] (AL) {$[A.L]$}
-  node [node distance=3.5cm, right of=AL] (DWTA) {\DWT{A.L}{A.H}}
-  node [block, right of=DWTA] (BL) {$[B.L]$}
-  node [node distance=3.5cm, right of=BL] (DWTB) {\DWT{B.L}{B.H}}
-  node [block, right of=DWTB] (CL) {$[C.L]$}
-  node [node distance=3.5cm, right of=CL] (DWTC) {\DWT{C.L}{C.H}}
-  node [block, above of=DWTA] (a) {$a$}
-  node [block, above of=DWTB] (b) {$b$}
-  node [block, above of=DWTC] (c) {$c$}
-  node [below of=DWTA, node distance=1.2cm] (A) {$A$}
-  node [below of=DWTC, node distance=1.2cm] (C) {$C$}
-  %node [block, above of=DWTB] (B) {$b$}
-  %node [block, above of=DWTC] (C) {$c$}
-  node [block, below of=DWTA] (AH) {$[A.H]$}
-  node [block, below of=DWTB] (BH) {$[B.H]$}
-  node [block, below of=DWTC] (CH) {$[C.H]$}
-  node [block, below of=AH] (BHA) {$[B_A.H]$}
-  node [sum, below of=BH] (suma) {\suma}
-  node [block, below of=CH] (BHC) {$[B_C.H]$}
-  node [draw, thick, rectangle, right of=BHA, node distance=3.5cm] (12a) {$1/2$}
-  node [draw, thick, rectangle, left of=BHC, node distance=3.5cm] (12b) {$1/2$}
-  node [block, below of=suma] (BHp) {$[\tilde{B}.H]$}
-  node [node distance=3.5cm, below of=BHp] (BHp2) {\DWT{0}{\tilde{B}.H}}
-  node [node distance=3.5cm, below of=BHp2] (out) {\DWT{B.L}{\tilde{B}.H}}
-  node [below of=out, node distance=1.2cm] (B) {$B$}
+  node [block] (aL) {$[a.L]$}
+  node [node distance=3.5cm, right of=aL] (DWTa) {\DWT{a.L}{a.H}}
+  node [block, right of=DWTa] (bL) {$[b.L]$}
+  node [node distance=3.5cm, right of=bL] (DWTb) {\DWT{b.L}{b.H}}
+  node [block, right of=DWTb] (cL) {$[c.L]$}
+  node [node distance=3.5cm, right of=cL] (DWTc) {\DWT{c.L}{c.H}}
+  node [above of=DWTa, node distance=1.2cm] (a) {$a$}
+  node [above of=DWTb, node distance=1.2cm] (b) {$b$}
+  node [above of=DWTc, node distance=1.2cm] (c) {$c$}
+  node [block, below of=DWTa] (aH) {$[a.H]$}
+  node [block, below of=DWTb] (bH) {$[b.H]$}
+  node [block, below of=DWTc] (cH) {$[c.H]$}
+  node [block, below of=aH] (bHa) {$[b_a.H]$}
+  node [sum, below of=bH] (suma) {\suma}
+  node [block, below of=cH] (bHc) {$[b_c.H]$}
+  node [draw, thick, rectangle, right of=bHa, node distance=3.5cm] (12a) {$1/2$}
+  node [draw, thick, rectangle, left of=bHc, node distance=3.5cm] (12b) {$1/2$}
+  node [block, below of=suma] (bHp) {$[\tilde{b}.H]$}
+  node [node distance=3.5cm, below of=bHp] (bHp2) {\DWT{0}{\tilde{b}.H}}
+  %node [node distance=3.5cm, below of=bHp2] (out) {\DWT{b.L}{\tilde{b}.H}}
   ;
   
-  \draw [->] (a) -- node {DWT} ($(DWTA) + (0,1cm)$);
-  \draw [->] ($(DWTA) + (-1cm,0.5cm)$) -- node[below] {iDWT} (AL);
-  \draw [->] (b) -- node {DWT} ($(DWTB) + (0,1cm)$);
-  \draw [->] ($(DWTB) + (-1cm,0.5cm)$) -- node[below] {iDWT} (BL);
-  \draw [->] (c) -- node {DWT} ($(DWTC) + (0,1cm)$);
-  \draw [->] ($(DWTC) + (-1cm,0.5cm)$) -- node[below] {iDWT} (CL);
-  \draw [->] ($(DWTA) + (0.5cm,-1cm)$) -- node[left] {iDWT} (AH);
-  \draw [->] ($(DWTB) + (0.5cm,-1cm)$) -- node {iDWT} (BH);
-  \draw [->] ($(DWTC) + (0.5cm,-1cm)$) -- node {iDWT} (CH);
-  \draw [->] (AH) -- node {$[B.L]\rightarrow [A.L]$} (BHA);
-  \draw [->] (BH) -- (suma);
-  \draw [->] (CH) -- node {$[B.L]\rightarrow [C.L]$} (BHC);
-  \draw [->] (BHA) -- (12a);
-  \draw [->] (BHC) -- (12b);
+  \draw [->] ($(DWTa) + (-1cm,0.5cm)$) -- node[below] {iDWT} (aL);
+  \draw [->] ($(DWTb) + (-1cm,0.5cm)$) -- node[below] {iDWT} (bL);
+  \draw [->] ($(DWTc) + (-1cm,0.5cm)$) -- node[below] {iDWT} (cL);
+  \draw [->] ($(DWTa) + (0.5cm,-1cm)$) -- node[left] {iDWT} (aH);
+  \draw [->] ($(DWTb) + (0.5cm,-1cm)$) -- node {iDWT} (bH);
+  \draw [->] ($(DWTc) + (0.5cm,-1cm)$) -- node {iDWT} (cH);
+  \draw [->] (aH) -- node {$[b.L]\rightarrow [a.L]$} (bHa);
+  \draw [->] (bH) -- (suma);
+  \draw [->] (cH) -- node {$[b.L]\rightarrow [c.L]$} (bHc);
+  \draw [->] (bHa) -- (12a);
+  \draw [->] (bHc) -- (12b);
   \draw [->] (12a) -- node[pos=0.95] {$-$} (suma);
   \draw [->] (12b) -- node[pos=0.95] {$-$} (suma);
-  \draw [->] (suma) -- (BHp);
-  \draw [->] (BHp) -- node {DWT} ($(BHp2) + (0,1cm)$);
-  \draw [->] ($(BHp2) + (0.5cm,-0.8cm)$) -- ($(out) + (0.5cm,0.9cm)$);
-  \path [line,->] ($(DWTB.north) + (-0.5cm,-0.3cm)$) -| ($(DWTB.north) + (-0.5cm,0.5cm)$) -| ($(DWTB.north) + (-5cm,0.5cm)$) -- ($(DWTB.north) + (-5cm,-5cm)$) -- ($(DWTB.north) + (-2cm,-5cm)$) -- ($(DWTB.north) + (-2cm,-18.1cm)$) -- ($(DWTB.north) + (-0.85cm,-18.1cm)$);
+  \draw [->] (suma) -- (bHp);
+  \draw [->] (bHp) -- node {DWT} ($(bHp2) + (0,1cm)$);
+  %\draw [->] ($(bHp2) + (0.5cm,-0.8cm)$) -- ($(out) + (0.5cm,0.9cm)$);
+  %\path [line,->] ($(DWTb.north) + (-0.5cm,-0.3cm)$) -| ($(DWTb.north) + (-0.5cm,0.5cm)$) -| ($(DWTb.north) + (-5cm,0.5cm)$) -- ($(DWTb.north) + (-5cm,-5cm)$) -- ($(DWTb.north) + (-2cm,-5cm)$) -- ($(DWTb.north) + (-2cm,-18.1cm)$) -- ($(DWTb.north) + (-0.85cm,-18.1cm)$);
   
 \end{tikzpicture}
 \end{document}

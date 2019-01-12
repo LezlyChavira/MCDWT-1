@@ -7,8 +7,6 @@
 
 import cv2
 import numpy as np
-import pywt
-import math
 import sys
 
 from DWT import DWT
@@ -23,20 +21,21 @@ class MCDWT:
         self.zero_L = np.zeros(shape, np.float64)
         self.zero_H = (self.zero_L, self.zero_L, self.zero_L)
         self.dwt = DWT()
-        #self.mc = MC()
 
     def __forward_butterfly(self, aL, aH, bL, bH, cL, cH):
-        ''' Motion compensated forward MCDWT butterfly.
+        '''Motion compensated forward MCDWT butterfly.
 
         Input:
         -----
 
-        aL, aH, bL, bH, cL, cH: array[y, x, component], the pyramid of the images a, b and c.
+        aL, aH, bL, bH, cL, cH: array[y, x, component], the pyramid of
+        the images a, b and c.
 
         Output:
         ------
-        residue_bH: array[y, x, component], the base of the pyramid of the residue fot the image b.
 
+        residue_bH: array[y, x, component], the base of the pyramid of
+        the residue fot the image b.
 
         '''
 
@@ -47,24 +46,11 @@ class MCDWT:
         BH = self.dwt.backward((self.zero_L, bH))
         CH = self.dwt.backward((self.zero_L, cH))
         BHA = generate_prediction(AL, BL, AH)
-        BHC = generate_prediction(CL, BL, CL)
+        BHC = generate_prediction(CL, BL, CH)
         prediction_BH = (BHA + BHC) / 2
         residue_BH = BH - prediction_BH
         residue_bH = self.dwt.forward(residue_BH)
         return residue_bH[1]
-
-        #dwtB = dwt.forward(A)
-        #BL = dwt.backward(dwtB[0], zero_H)
-        #BH = dwt.backward(zero_L, dwtB[1])
-        #dwtC = dwt.forward(C)
-        #CL = dwt.backward(dwtC[0], zero_H)
-        #CH = dwt.backward(zero_L, dwtC[1])
-        #BAH = motion_compensation(AL, BL, AH)
-        #BCH = motion_compensation(CL, BL, CL)
-        #prediction = (BAH + BCH) / 2
-        #rBH = BH - prediction
-        ##rBH = dwt.forward(rBH)
-        #return BL, rBH, CL, CH
 
     def __backward_butterfly(self, aL, aH, bL, residue_bH, cL, cH):
         AL = self.dwt.backward((aL, self.zero_H))
@@ -74,7 +60,7 @@ class MCDWT:
         residue_BH = self.dwt.backward((self.zero_L, residue_bH))
         CH = self.dwt.backward((self.zero_L, cH))
         BHA = generate_prediction(AL, BL, AH)
-        BHC = generate_prediction(CL, BL, CL)
+        BHC = generate_prediction(CL, BL, CH)
         prediction_BH = (BHA + BHC) / 2
         BH = residue_BH + prediction_BH
         bH = self.dwt.forward(BH)

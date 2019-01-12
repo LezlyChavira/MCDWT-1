@@ -108,7 +108,7 @@ implements the forward and backward 2D-DWT for color images. $L$ and
 $H$ stands for \emph{low-pass filtered} and \emph{high-pass filtered},
 respectively.
 
-\lstinputlisting[language=python]{../src/DWT.py}
+\lstinputlisting[firstline=9, lastline=130, language=python, caption=DWT.py]{../src/DWT.py}
 
 The 1-iteration 2D-DWT can be applied $k$-times to the $LL$ subband
 recursively, generating a pyramid of $k+1$-levels. For the sake of
@@ -131,7 +131,7 @@ exploited. All the temporal redundancy is still in the video.
 \imgw{400}{graphics/forward_MDWT.svg}
 \caption{Forward MDWT step.}
 \end{figure}
-\lstinputlisting[language=python]{../src/MDWT.py}
+\lstinputlisting[firstline=16, lastline=62, language=python, caption=MDWT.py]{../src/MDWT.py}
 
 \subsection{Scalability in MDWT}
 The 2D-DWT applied to a video produces a scalable representation in the
@@ -163,52 +163,52 @@ subbands $\{LL^2, LH^2, HL^2, HH^2\}$), we must apply the 2D-iDWT
 (1-levels 2D inverse DWT).
 
 \subsection{Redundancy and (previsible) compression in MDWT}
-The 2D-DWT incorporates to $S$ an interesting feature: usually,
-$H$ subbands has a lower entropy than $s$. This means that
-if we apply to $S$ an entropy encoder, we can get a shorter
-representation of the video than if we encode $s$ directly. This
-is a consequence of that 2D-DWT removes (most of) the spatial redudancy
-of the images of the video (neighboring pixels tend to have similar
-values and their substraction tends to produce zeros).
+The 2D-DWT incorporates to $S$ an interesting feature: usually, $H$
+subbands has a lower entropy than $s$. This means that if we apply to
+$S$ an entropy encoder, we can get a shorter representation of the
+video than if we encode $s$ directly. This is a consequence of that
+2D-DWT removes (most of) the spatial redudancy of the images of the
+video (neighboring pixels tend to have similar values and their
+substraction tends to produce zeros, which reduces the entropy and
+increases the compression ratio).
 
-\section{Removing temporal redundancy with MCDWT}
-As we have said, the 2D-DWT does not exploit the temporal redundancy of
-a video. Consequently, we can achieve higher compression ratios (in
-addition to the 2D-DWT) if we apply a 1D-DWT along the temporal domain.
-This is exactly what MCDWT does. However, due to the temporal redundancy
-is generated mainly by the presence of objects in the scene of the video
-which are moving with respect to the camera, some sort of motion
-compensation should be used before substacting the prediction images to
-the original ones.
+\section{MCDWT}
+As we have said, the 2D-DWT does not exploit the temporal redundancy
+of a video. Consequently, we can achieve higher compression ratios
+(than using MDWT) if we apply a 1D-DWT along the temporal domain.
+This is exactly what MCDWT does. However, owing to the temporal
+redundancy is generated mainly by the presence of objects in the scene
+of the video which are moving with respect to the camera, some sort of
+motion compensation should be used before substacting the prediction
+images to the original ones. MCDWT is based on the idea that, to
+provide MC without transmitting the motion information from the
+encoder to the decoder, the motion information is computed at both
+ends, using only the information that is available at the decoder.
 
-\section{The MCDWT forward butterfly}
-MCDWT is based on the idea that, to provide MC without transmitting
-the motion information from the encoder to the decoder, the motion
-information is computed at both ends, using only the information that
-is available at the decoder.
+\subsection{MCDWT forward butterfly}
 
-\subsection{Input}
-Three frames of $s$: $a$, $b$ and $c$.
+MCDWT butterly inputs three pyramids $a=\{a.L, a.H\}$, $b=\{b.L,
+b.H\}$ and $c=\{c.L, c.H\}$, and outputs a residue subband
+$\tilde{b}.H$, which replaces to $b.H$ in the original $b$
+pyramid. So, after the use of the bufferfly, we get $a=\{a.L, a.H\}$
+(an intra-coded ``I'' image), $\tilde{b}=\{b.L, \tilde{b}.H\}$ (a
+bidirectionally predicted ``B'' image) and $c=\{c.L, c.H\}$ (an
+intra-coded ``I'' image). Obviously, this replacement is fully
+reversible.
 
-\subsection{Output}
-Three frames $A=\{A.L, A.H\}$ (intra-coded),
-$B=\{B.L, \tilde{B}.H\}$ (bidirectionally predicted) and
-$C=\{C.L, C.H\}$ (intra-coded).
-
-\subsection{Algorithm}
 \begin{figure}
 \centering
 \imgw{800}{graphics/forward_MCDWT.svg}
 \caption{Forward MCDWT butterfly.}
 \end{figure}
-\lstinputlisting[language=python,firstline=19,lastline=31]{../src/MCDWT.py}
+\lstinputlisting[firstline=20, lastline=67, language=python, caption=MCDWT.py]{../src/MCDWT.py}
 
 Notice that, even if $a$ and $c$ (at full resolution) are available
-at the decoder, only $B.L$ is. So, does not make sense to search the
-low resolution structures of $B.L$ in the high resolution images $a$
+at the decoder, only $b.L$ is. So, does not make sense to search the
+low resolution structures of $b.L$ in the high resolution images $a$
 and $c$, because even if a perfect match is achieved, the prediction
-error would be different than $0$ as a consequence of the high
-resolution information is missing in $B.L$.
+error would be different than $0$ as a consequence of that the high
+resolution information is missing in $b.L$.
 
 \end{document}
 

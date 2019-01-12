@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Note: swap the above line with the following two ones to switch
-# between the standard and the optimized mode.
+# between the standard and the optimized running mode.
 
 #!/bin/sh
 ''''exec python3 -O -- "$0" ${1+"$@"} # '''
@@ -124,9 +124,6 @@ class DWT:
         for c in range(3):
             image[:,:,c] = pywt.idwt2((LL[:,:,c], (LH[:,:,c], HL[:,:,c], HH[:,:,c])), 'db5', mode='per')
         if __debug__:
-#            for y in range(50):
-#                for x in range(50):
-#                    print(image[y+50,x+50,0], end=' ')
             cv2.imshow("image pyramid", image/256)
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)

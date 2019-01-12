@@ -8,65 +8,92 @@
 \author{Vicente González Ruiz}
 
 \maketitle
+
 \section{Intro}
 
-MCDWT is a multiresolution
-\href{https://en.wikipedia.org/wiki/Video}{video} transform. The input
-sequence of \href{https://en.wikipedia.org/wiki/Pixel}{pixels} are
-\href{https://en.wikipedia.org/wiki/Decorrelation}{decorrelated} in
-the \href{https://en.wikipedia.org/wiki/Time_domain}{time} and in the
+\href{https://en.wikipedia.org/wiki/Video}{Video} data show high
+amounts of redundancy, spatial and temporal. For this reason, most of
+video encoders compress the input
+\href{https://en.wikipedia.org/wiki/Pixel}{pixels} basically in two
+stages: (1) a
+\href{https://en.wikipedia.org/wiki/Decorrelation}{decorrelation}
+stage in the \href{https://en.wikipedia.org/wiki/Time_domain}{time}
+and in the
 \href{https://www.quora.com/What-is-spatial-domain-in-image-processing}{spatial}
-domains. The output sequence of
-\href{https://www.quora.com/What-is-spatial-domain-in-image-processing}{coefficients}
-have a smaller \href{https://en.wikipedia.org/wiki/Entropy}{entropy}
-than the original pixels, and the information is represented by
-temporal and spatial
-\href{https://en.wikipedia.org/wiki/Image_resolution}{resolution
-  levels}. In MCDWT (and in general, in video coding):
-
+domains that produces a collection of spatially uncorrelated
+\href{https://www.quora.com/What-is-spatial-domain-in-image-processing}{coefficients}, and (2) an entropy encoding phase to remove the statistical redundancy. These coefficients have two interesting features:
 \begin{itemize}
-\item
-  \textbf{Temporal decorrelation} is provided
-  by \href{https://en.wikipedia.org/wiki/Motion_compensation}{MC
-  (Motion Compensation)}, where
-  the \href{https://en.wikipedia.org/wiki/Decoder}{prediction images}
-  are generated with an algorithm that uses only the information
-  available at
-  the \href{https://en.wikipedia.org/wiki/Decoder}{decoder}.
-\item
-  \textbf{Spatial decorrelation} is performed by the
-  \href{https://en.wikipedia.org/wiki/Digital_filter\#Analysis_techniques}{analysis
-  filtering} used in the
-  \href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{2D-DWT}.
+\item Usually have a \textbf{smaller entropy} than the original pixels.
+\item The transform domain provides a \textbf{multiresolution representation} of the visual information, or in other words, that the transform domain provides spatial \href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}.
 \end{itemize}
 
-\section{Video \href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}}
-MCDWT inputs a \href{https://en.wikipedia.org/wiki/Video}{video} (a
-sequence of images) and outputs a video (a sequece of pyramids), in
-such a way that when only a portion of the data of the transformed
-video is used, a video with a lower
-\href{https://en.wikipedia.org/wiki/Temporal_resolution}{temporal
-resolution}, lower
-\href{https://en.wikipedia.org/wiki/Image_resolution\#Spatial_resolution}{spatial
-resolution} or/and lower
-\href{https://en.wikipedia.org/wiki/Compression_artifact}{quality} can
-be generated.
+\section{Distrete Wavelet Transform (DWT)}
+\href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{2D-DWT}
+applied to an image is a suitable transform for obtaining a spatial
+(2D) decorrelation and, at the same time, a multiresolution
+representation of such image. The forward transform transform the image into a set of subbands of different frequency with coefficients representing different spatial areas. 
 
-If all the transformed data is used, then the original video is
-restored (MCDWT is a lossless transform). The forward transform's
-output has exactly the same number of pyramids than images are in the
-input video (for example, no extra motion fields are produced). At
-this time, we will focuse only on spatial
-\href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}. Window Of Interest (WOI) and quality scabilities will be addressed later.
+\subsection{Wavelet and pyramid domains}
+DWT domain is closely related to \href{https://en.wikipedia.org/wiki/Pyramid_(image_processing)}{Gaussian
+  and Laplacian pyramids} because both (DWT and pyramids) are multiresolution, and it is quite fast to go from one domain to the other one and viceversa.
+
+\subsection{DWT implementation}
+\href{https://github.com/vicente-gonzalez-ruiz/MCDWT/blob/master/src/DWT.py}{DWT.py}
+implements the forward and backward 2D-DWT for color images. $L$ and
+$H$ stands for \emph{low-pass filtered} and \emph{high-pass filtered},
+respectively.  More information at
+\href{https://pywavelets.readthedocs.io/en/latest/index.html}{PyWavelets}.
+
+\lstinputlisting[firstline=9, lastline=130, language=python, caption=DWT.py]{../src/DWT.py}
+
+Notice that the 1-iteration 2D-DWT can be applied $k$-times to the $LL$ subband
+recursively, generating a pyramid of $k+1$-levels. For the sake of
+simplicity, we will denote the subbands $\{LH^k, HL^k, HH^k\}$ as only
+$H^k$, and $LL^k$ as only $L^k$.
+
+\subsection{Spatial scalability in a DWT pyramid}
+The DWT apllied to an image produces a scalable representation in
+the space (we can extract different image with different spatial scale
+or resolutions). For example, the scale $2$ of an image $s_1$ that has
+been transformed using the DWT of 2 levels will be represented by
+the subband $s_1.L^2$, the scale $1$ by the subband
+$s_1.L=\text{iDWT}(s_1.L^2, S_1.H^2)$, and the scale $0$ (the original
+resolution of the image) by the subband $s_1.L^0=\text{iDWT}(s_1.L,
+s_1.H)$.
+
+\section{Motion DWT (MDWT)}
+DWT can be applied to a sequence of images simply transforming each image of the sequence independently. This is done, for example, in the
+\href{https://en.wikipedia.org/wiki/JPEG_2000}{motion JPEG2000 video
+compression standard}. Notice that only the spatial redundancy is
+exploited. All the temporal redundancy is still in the video.
+
+\begin{figure}
+\centering
+\imgw{400}{graphics/forward_MDWT.svg}
+\caption{Forward MDWT step.}
+\end{figure}
+
+\subsection{MDWT implementation}
+\lstinputlisting[firstline=16, lastline=62, language=python, caption=MDWT.py]{../src/MDWT.py}
+
+\subsection{Spatial and temporal scalabilities in MDWT}
+MDWT pyramid sequences are scalable in space and in time. The first
+one is a inmediate consequence of that MCDWT is the use of the DWT to
+all the images of a sequence. On the other hand, it is trivial to
+observe that MDWT provides fully temporal scalability (we can access
+to the images randomly).
+
+\subsection{Redundancy removed by MDWT}
+As DWT, MDWT exploits the spatial redundancy in the image
+sequences. The compression ratios provided by MDWT will be identical
+to the use of DWT to each image of the sequence. All temporal redundancy remains in the encoded sequence.
 
 \section{Video transform alternatives}
-To obtain a multiresolution version or a video, the
-\href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{DWT}
-(Discrete Wavelet Transform) can be applied along temporal (t) and
-spatial domains (2D). At this point, two different alternatives are
-available: (1) a t+2D transform or (2) a 2D+t transform. In a t+2D
-transform, the video is first analyzed over the time domain and next,
-over the space domain. A 2D+t transform does just the opposite.
+To remove both, spatial and temporal redundancies, two different
+alternatives are available: (1) a t+2D transform or (2) a 2D+t
+transform. In a t+2D transform, the video is first analyzed over the
+time domain and next, over the space domain. A 2D+t transform does
+just the opposite.
 
 Each choice has a number of \emph{pros} and \emph{cons}. For example, in
 a t+2D transform we can apply directly any image predictor based on
@@ -86,85 +113,8 @@ video is not suitable because the first step of the forward transform
 (t) should be reversed at full resolution in the backward transform (as
 the forward transform did).
 
-\section{Wavelet and pyramid domains}
-Indeed, the DWT allows to get a scalable representation of a image, and
-by extension of a video, when we apply the DWT on all the images of the
-video. However, this can be also done with
-\href{https://en.wikipedia.org/wiki/Pyramid_(image_processing)}{Gaussian
-and Laplacian pyramids}. Image pyramids are interesting because they are
-shift invariant and therefore, one can operate within the scales as they
-are \emph{normal} images. Unfortunately, as a consecuence of pyramids
-representations are not critically sampled, they need more picture
-elements than in
-\href{http://www.vtvt.ece.vt.edu/research/references/video/DCT_Video_Compression/Zhang92a.pdf}{wavelet
-pyramids}, and this is a serious drawback when compressing. Luckily, it
-is very fast to convert a Laplacian pyramid representation into it DWT
-equivalent representation, and viceversa. For this reason, even if we
-use wavelet pyramids in our images, we can suppose at any moment that we
-are working with the Laplacian pyramid of those images.
-
-\href{https://github.com/vicente-gonzalez-ruiz/MCDWT/blob/master/src/DWT.py}{DWT.py}
-implements the forward and backward 2D-DWT for color images. $L$ and
-$H$ stands for \emph{low-pass filtered} and \emph{high-pass filtered},
-respectively.
-
-\lstinputlisting[firstline=9, lastline=130, language=python, caption=DWT.py]{../src/DWT.py}
-
-The 1-iteration 2D-DWT can be applied $k$-times to the $LL$ subband
-recursively, generating a pyramid of $k+1$-levels. For the sake of
-simplicity, we will denote the subbands $\{LH^k, HL^k, HH^k\}$ as only
-$H^k$, and $LL^k$ as only $L^k$.
-
-\subsection{Spatial scalability in a DWT pyramid}
-The 2D-DWT apllied to an image produces a scalable representation in
-the space (we can extract different image with different spatial scale
-or resolutions). For example, the scale $2$ of an image $s_1$ that has
-been transformed using the 2D-DWT of 2 levels will be represented by
-the subband $s_1.L^2$, the scale $1$ by the subband
-$s_1.L=\text{iDWT}(s_1.L^2, S_1.H^2)$, and the scale $0$ (the original
-resolution of the image) by the subband $s_1.L^0=\text{iDWT}(s_1.L,
-s_1.H)$. More information at
-\href{https://pywavelets.readthedocs.io/en/latest/index.html}{PyWavelets}.
-
-\subsection{Redundancy and (previsible) compression with DWT}
-DWT reduces the entropy of the high-frequency subbands as a consequece
-of that the spatial redundancy is exploited by the anaylsis filters
-used by the 2D-DWT. Compared to the direct lossless compression of the
-images, DWT usually increments (at least slightly) the lossless
-compressio ratio.
-
-\section{Motion DWT (MDWT)}
-As said before, a
-\href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{2D-DWT}
-(2 Dimensions - Discrete Wavelet Transform) generates a scalable
-representation of an image and by extension, of a video if we apply the
-DWT to all the images of the video. This is done, for example, in the
-\href{https://en.wikipedia.org/wiki/JPEG_2000}{motion JPEG2000 video
-compression standard}. Notice that only the spatial redundancy is
-exploited. All the temporal redundancy is still in the video.
-
-\begin{figure}
-\centering
-\imgw{400}{graphics/forward_MDWT.svg}
-\caption{Forward MDWT step.}
-\end{figure}
-\lstinputlisting[firstline=16, lastline=62, language=python, caption=MDWT.py]{../src/MDWT.py}
-
-\subsection{Scalabilities in MDWT}
-MDWT pyramid sequences are scalable in space and in time. The first
-one is a inmediate consequence of that MCDWT is the use of the DWT to
-all the images of a sequence. On the other hand, it is trivial to
-observe that MDWT provides fully temporal scalability (we can access
-to the images randomly).
-
-\subsection{Redundancy and (previsible) compression in MDWT}
-As DWT, MDWT exploits the spatial redundancy in the image
-sequences. The compression ratios provided by MDWT will be identical
-to the use of DWT to each image of the sequence.
-
 \section{MCDWT}
-As we have said, the 2D-DWT does not exploit the temporal redundancy
-of a video. Consequently, we can achieve higher compression ratios
+We can achieve higher compression ratios
 (than using MDWT) if we apply a 1D-DWT along the temporal domain.
 This is exactly what MCDWT does. However, owing to the temporal
 redundancy is generated mainly by the presence of objects in the scene
@@ -230,6 +180,80 @@ Figure~\ref{fig:forward_MCDWT}.
 \imgw{800}{graphics/multiresolution.svg}
 \caption{MDWT+MCDWT multiresolution procedure.\label{fig:multiresolution}}
 \end{figure}
+
+-------
+
+The DWT allows to get a scalable representation of a image, and
+by extension of a video, when we apply the DWT on all the images of the
+video. However, this can be also done with
+\href{https://en.wikipedia.org/wiki/Pyramid_(image_processing)}{Gaussian
+and Laplacian pyramids}. Image pyramids are interesting because they are
+shift invariant and therefore, one can operate within the scales as they
+are \emph{normal} images. Unfortunately, as a consecuence of pyramids
+representations are not critically sampled, they need more picture
+elements than in
+\href{http://www.vtvt.ece.vt.edu/research/references/video/DCT_Video_Compression/Zhang92a.pdf}{wavelet
+pyramids}, and this is a serious drawback when compressing. Luckily, it
+is very fast to convert a Laplacian pyramid representation into it DWT
+equivalent representation, and viceversa. For this reason, even if we
+use wavelet pyramids in our images, we can suppose at any moment that we
+are working with the Laplacian pyramid of those images
+
+
+----
+MCDWT is a multiresolution
+\href{https://en.wikipedia.org/wiki/Video}{video} transform. The input
+sequence of \href{https://en.wikipedia.org/wiki/Pixel}{pixels} are
+\href{https://en.wikipedia.org/wiki/Decorrelation}{decorrelated} in
+the \href{https://en.wikipedia.org/wiki/Time_domain}{time} and in the
+\href{https://www.quora.com/What-is-spatial-domain-in-image-processing}{spatial}
+domains. The output sequence of
+\href{https://www.quora.com/What-is-spatial-domain-in-image-processing}{coefficients}
+have a smaller \href{https://en.wikipedia.org/wiki/Entropy}{entropy}
+than the original pixels, and the information is represented by
+temporal and spatial
+\href{https://en.wikipedia.org/wiki/Image_resolution}{resolution
+  levels}. In MCDWT (and in general, in video coding):
+
+\begin{itemize}
+\item
+  \textbf{Temporal decorrelation} is provided
+  by \href{https://en.wikipedia.org/wiki/Motion_compensation}{MC
+  (Motion Compensation)}, where
+  the \href{https://en.wikipedia.org/wiki/Decoder}{prediction images}
+  are generated with an algorithm that uses only the information
+  available at
+  the \href{https://en.wikipedia.org/wiki/Decoder}{decoder}.
+\item
+  \textbf{Spatial decorrelation} is performed by the
+  \href{https://en.wikipedia.org/wiki/Digital_filter\#Analysis_techniques}{analysis
+  filtering} used in the
+  \href{https://en.wikipedia.org/wiki/Discrete_wavelet_transform}{2D-DWT}.
+\end{itemize}
+
+\section{Video \href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}}
+MCDWT inputs a \href{https://en.wikipedia.org/wiki/Video}{video} (a
+sequence of images) and outputs a video (a sequece of pyramids), in
+such a way that when only a portion of the data of the transformed
+video is used, a video with a lower
+\href{https://en.wikipedia.org/wiki/Temporal_resolution}{temporal
+resolution}, lower
+\href{https://en.wikipedia.org/wiki/Image_resolution\#Spatial_resolution}{spatial
+resolution} or/and lower
+\href{https://en.wikipedia.org/wiki/Compression_artifact}{quality} can
+be generated.
+
+If all the transformed data is used, then the original video is
+restored (MCDWT is a lossless transform). The forward transform's
+output has exactly the same number of pyramids than images are in the
+input video (for example, no extra motion fields are produced). At
+this time, we will focuse only on spatial
+\href{http://inst.eecs.berkeley.edu/~ee290t/sp04/lectures/videowavelet_UCB1-3.pdf}{scalability}. Window Of Interest (WOI) and quality scabilities will be addressed later.
+
+
+
+
+
 
 \end{document}
 

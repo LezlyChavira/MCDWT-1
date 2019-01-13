@@ -32,7 +32,7 @@ def readL(file_name):
         raise InputFileException('{} not found'.format(fn))
     else:
         if __debug__:
-            print("pyramid: read {}".format(fn))
+            print("decomposition: read {}".format(fn))
     LL = LL.astype(np.float32)
     LL -= 32768.0
     LL = LL.astype(np.int16)
@@ -45,7 +45,7 @@ def readH(file_name):
         raise InputFileException('{} not found'.format(fn))
     else:
         if __debug__:
-            print("pyramid: read {}".format(fn))
+            print("decomposition: read {}".format(fn))
     LH = LH.astype(np.float32)
     LH -= 32768.0
     LH = LH.astype(np.int16)
@@ -56,7 +56,7 @@ def readH(file_name):
         raise InputFileException('{} not found'.format(fn))
     else:
         if __debug__:
-            print("pyramid: read {}".format(fn))
+            print("decomposition: read {}".format(fn))
     HL = HL.astype(np.float32)
     HL -= 32768.0
     HL = HL.astype(np.int16)
@@ -67,7 +67,7 @@ def readH(file_name):
         raise InputFileException('{} not found'.format(fn))
     else:
         if __debug__:
-            print("pyramid: read {}".format(fn))
+            print("decomposition: read {}".format(fn))
     HH = HH.astype(np.float32)
     HH -= 32768.0
     HH = HH.astype(np.int16)
@@ -75,14 +75,14 @@ def readH(file_name):
     return LH, HL, HH
 
 def read(file_name):
-    '''Read a pyramid from disk. The coefficients must be in the range [0, 65535].
+    '''Read a decomposition from disk. The coefficients must be in the range [0, 65535].
 
     Parameters
     ----------
 
         file_name : str.
 
-            Path to the pyramid in the file system, without extension.
+            Path to the decomposition in the file system, without extension.
 
     Returns
     -------
@@ -91,7 +91,7 @@ def read(file_name):
         where LH, HL, HH = [:,:,:]. The coefficients are in the range
         [-32768, 32767].
 
-            A color pyramid.
+            A color decomposition.
 
     '''
 
@@ -124,13 +124,13 @@ def writeL(LL, file_name):
     LL += 32768.0
     LL = LL.astype(np.uint16)
     if __debug__:
-        cv2.imshow("LL pyramid", (LL-32768+128)*256)
+        cv2.imshow("LL subband", (LL-32768+128)*256)
         while cv2.waitKey(1) & 0xFF != ord('q'):
             time.sleep(0.1)
     cv2.imwrite(file_name + "_LL.png", LL)
     os.rename(file_name + "_LL.png", file_name + "_LL")
     if __debug__:
-        print("pyramid: written {}".format(file_name + "_LL"))
+        print("decomposition: written {}".format(file_name + "_LL"))
 
 def writeH(H, file_name):
     '''Write the high-frequency subbands H=(LH, HL, HH) to the disk.
@@ -154,7 +154,7 @@ def writeH(H, file_name):
     cv2.imwrite(file_name + "_LH.png", LH)
     os.rename(file_name + "_LH.png", file_name + "_LH")
     if __debug__:
-        print("pyramid: written {}".format(file_name + "_LH"))
+        print("decomposition: written {}".format(file_name + "_LH"))
 
     HL = H[1].astype(np.float32)
     HL += 32768.0
@@ -162,7 +162,7 @@ def writeH(H, file_name):
     cv2.imwrite(file_name + "_HL.png", HL)
     os.rename(file_name + "_HL.png", file_name + "_HL")
     if __debug__:
-        print("pyramid: written {}".format(file_name + "_HL"))
+        print("decomposition: written {}".format(file_name + "_HL"))
 
     HH = H[2].astype(np.float32)
     HH += 32768.0
@@ -170,21 +170,21 @@ def writeH(H, file_name):
     cv2.imwrite(file_name + "_HH.png", HH)
     os.rename(file_name + "_HH.png", file_name + "_HH")
     if __debug__:
-        print("pyramid: written {}".format(file_name + "_HH"))
+        print("decomposition: written {}".format(file_name + "_HH"))
 
-def write(pyramid, file_name):
-    '''Write a pyramid to disk.
+def write(decomposition, file_name):
+    '''Write a decomposition to disk.
 
     Parameters
     ----------
 
-        pyramid : (LL, (LH, HL, HH) where each subband is [:,:,:].
+        decomposition : (LL, (LH, HL, HH) where each subband is [:,:,:].
 
-            Pyramid structure.
+            Decomposition structure.
 
         file_name : str.
 
-            Pyramid in the file system.
+            Decomposition in the file system.
 
     Returns
     -------
@@ -193,8 +193,8 @@ def write(pyramid, file_name):
 
     '''
 
-    writeL(pyramid[0], file_name)
-    writeH(pyramid[1], file_name)
+    writeL(decomposition[0], file_name)
+    writeH(decomposition[1], file_name)
 
 if __name__ == "__main__":
 
@@ -205,4 +205,4 @@ if __name__ == "__main__":
     os.system("cp ../../sequences/stockholm/004 /tmp/_HH")
     pyr = read("/tmp/")
     write(pyr, "/tmp/out")
-    print("generated pyramid /tmp/out")
+    print("generated decomposition /tmp/out")

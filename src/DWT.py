@@ -16,7 +16,7 @@ if __debug__:
 
 sys.path.insert(0, "..")
 from src.IO import image
-from src.IO import pyramid
+from src.IO import decomposition
 
 class DWT:
 
@@ -45,10 +45,10 @@ class DWT:
         Output:
         ------
 
-            a pyramid: a tuple (L, H), where L (low-frequencies subband)
+            a decomposition: a tuple (L, H), where L (low-frequencies subband)
             is an array[y, x, component], and H (high-frequencies
             subbands) is a tuple (LH, HL, HH), where LH, HL, HH are
-            array[y, x, component], with the color pyramid.
+            array[y, x, component], with the color decomposition.
 
                  x
              +-------+-------+
@@ -92,16 +92,16 @@ class DWT:
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
 
-        pyramid = LL, (LH, HL, HH)
-        return pyramid
+        decomposition = LL, (LH, HL, HH)
+        return decomposition
 
-    def backward(self, pyramid):
-        '''2D 1-iteration inverse DWT of a color pyramid.
+    def backward(self, decomposition):
+        '''2D 1-iteration inverse DWT of a color decomposition.
 
         Input:
         -----
 
-            pyramid: the input pyramid (see forward transform).
+            decomposition: the input decomposition (see forward transform).
 
         Output:
         ------
@@ -109,22 +109,22 @@ class DWT:
             an image: the inversely transformed image (see forward transform).
 
         '''
-        LL = pyramid[0]
-        LH = pyramid[1][0]
-        HL = pyramid[1][1]
-        HH = pyramid[1][2]
+        LL = decomposition[0]
+        LH = decomposition[1][0]
+        HL = decomposition[1][1]
+        HH = decomposition[1][2]
         if __debug__:
-            cv2.imshow("LL pyramid", LL/256)
-            cv2.imshow("LH pyramid", LH/16)
-            cv2.imshow("HL pyramid", HL/16)
-            cv2.imshow("HH pyramid", HH/16)
+            cv2.imshow("LL subband", LL/256)
+            cv2.imshow("LH subband", LH/16)
+            cv2.imshow("HL subband", HL/16)
+            cv2.imshow("HH subband", HH/16)
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
         image = np.ndarray((LL.shape[0]*2, LL.shape[1]*2, 3), np.float64)
         for c in range(3):
             image[:,:,c] = pywt.idwt2((LL[:,:,c], (LH[:,:,c], HL[:,:,c], HH[:,:,c])), 'db5', mode='per')
         if __debug__:
-            cv2.imshow("image pyramid", image/256)
+            cv2.imshow("image decomposition", image/256)
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
         return image
@@ -142,9 +142,9 @@ if __name__ == "__main__":
         "  rm -rf /tmp/stockholm/\n"
         "  mkdir /tmp/stockholm\n"
         "  cp ../sequences/stockholm/000 /tmp/stockholm/\n"
-        "  ./DWT.py    -i /tmp/stockholm/000 -p /tmp/stockholm_000 # Forward transform\n"
+        "  ./DWT.py    -i /tmp/stockholm/000 -d /tmp/stockholm_000 # Forward transform\n"
         "  rm /tmp/stockholm/000                                   # Not really necessary\n"
-        "  ./DWT.py -b -p /tmp/stockholm_000 -i /tmp/stockholm/000 # Backward transform\n",
+        "  ./DWT.py -b -d /tmp/stockholm_000 -i /tmp/stockholm/000 # Backward transform\n",
         formatter_class=CustomFormatter)
 
     parser.add_argument("-b", "--backward", action='store_true',
@@ -153,8 +153,8 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--image",
                         help="Image to be transformed", default="/tmp/stockholm/000")
 
-    parser.add_argument("-p", "--pyramid",
-                        help="Pyramid to be transformed", default="/tmp/stockholm_000")
+    parser.add_argument("-d", "--decomposition",
+                        help="Decomposition to be transformed", default="/tmp/stockholm_000")
 
     args = parser.parse_args()
 
@@ -162,19 +162,19 @@ if __name__ == "__main__":
     if args.backward:
         if __debug__:
             print("Backward transform")
-        p = pyramid.read("{}".format(args.pyramid))
-        i = dwt.backward(p)
+        d = decomposition.read("{}".format(args.decomposition))
+        i = dwt.backward(d)
         #i = np.rint(i)
         image.write(i, "{}".format(args.image))
     else:
         if __debug__:
             print("Forward transform")
         i = image.read("{}".format(args.image))
-        p = dwt.forward(i)
-        print(type(p[0]))
-        #LL = np.rint(p[0])
-        #LH = np.rint(p[1][0])
-        #HL = np.rint(p[1][1])
-        #HH = np.rint(p[1][2])
-        #pyramid.write((LL, (LH, HL, HH)), "{}".format(args.pyramid))
-        pyramid.write(p, "{}".format(args.pyramid))
+        d = dwt.forward(i)
+        print(type(d[0]))
+        #LL = np.rint(d[0])
+        #LH = np.rint(d[1][0])
+        #HL = np.rint(d[1][1])
+        #HH = np.rint(d[1][2])
+        #decomposition.write((LL, (LH, HL, HH)), "{}".format(args.decomposition))
+        decomposition.write(d, "{}".format(args.decomposition))

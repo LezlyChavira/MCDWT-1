@@ -124,7 +124,10 @@ def writeL(LL, file_name):
     LL += 32768.0
     LL = LL.astype(np.uint16)
     if __debug__:
-        cv2.imshow("IO::decomposition:writeL: LL subband", (LL-32768+128)*256)
+        cv2.imshow("IO::decomposition:writeL: LL subband", (LL-np.amin(LL))/(np.amax(LL)-np.amin(LL)))
+#        for y in range(10):
+#            for x in range(10):
+#                print((LL[y+50, x+50, 0]-32768+128)*256, " ", end="")
         while cv2.waitKey(1) & 0xFF != ord('q'):
             time.sleep(0.1)
     cv2.imwrite(file_name + "_LL.png", LL)

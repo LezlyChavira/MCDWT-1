@@ -66,7 +66,7 @@ class DWT:
         '''
 
         if __debug__:
-            cv2.imshow("DWT::forward:input image", (image+256)*256)
+            cv2.imshow("DWT::forward:input image", (image-np.amin(image))/(np.amax(image)-np.amin(image)))
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
        
@@ -81,11 +81,11 @@ class DWT:
         for c in range(3):
             LL[:,:,c], (LH[:,:,c], HL[:,:,c], HH[:,:,c]) = pywt.dwt2(image[:,:,c], 'db5', mode='per')
         if __debug__:
-            print("LL: max={} min={}".format(np.amax(LL), np.amin(LL)))
-            print("LH: max={} min={}".format(np.amax(LH), np.amin(LH)))
-            print("HL: max={} min={}".format(np.amax(HL), np.amin(HL)))
-            print("HH: max={} min={}".format(np.amax(HH), np.amin(HH)))
-            cv2.imshow("DWT::forward: LL subband", (LL+256)/256)
+            print("DWT::forward: LL: max={} min={}".format(np.amax(LL), np.amin(LL)))
+            print("DWT::forward: LH: max={} min={}".format(np.amax(LH), np.amin(LH)))
+            print("DWT::forward: HL: max={} min={}".format(np.amax(HL), np.amin(HL)))
+            print("DWT::forward: HH: max={} min={}".format(np.amax(HH), np.amin(HH)))
+            cv2.imshow("DWT::forward: LL subband", (LL-np.amin(LL))/(np.amax(LL)-np.amin(LL)))
             cv2.imshow("DWT::forward: LH", LH/8)
             cv2.imshow("DWT::forward: HL", HL/8)
             cv2.imshow("DWT::forward: HH", HH/8)
@@ -114,10 +114,10 @@ class DWT:
         HL = decomposition[1][1]
         HH = decomposition[1][2]
         if __debug__:
-            cv2.imshow("LL subband", LL/256)
-            cv2.imshow("LH subband", LH/16)
-            cv2.imshow("HL subband", HL/16)
-            cv2.imshow("HH subband", HH/16)
+            cv2.imshow("LL subband", (LL-np.amin(LL))/(np.amax(LL)-np.amin(LL)))
+            cv2.imshow("LH subband", LH/8)
+            cv2.imshow("HL subband", HL/8)
+            cv2.imshow("HH subband", HH/8)
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
         image = np.ndarray((LL.shape[0]*2, LL.shape[1]*2, 3), np.float64)
@@ -171,7 +171,6 @@ if __name__ == "__main__":
             print("Forward transform")
         i = image.read("{}".format(args.image))
         d = dwt.forward(i)
-        print(type(d[0]))
         #LL = np.rint(d[0])
         #LH = np.rint(d[1][0])
         #HL = np.rint(d[1][1])

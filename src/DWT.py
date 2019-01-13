@@ -66,7 +66,7 @@ class DWT:
         '''
 
         if __debug__:
-            cv2.imshow("image", image)
+            cv2.imshow("DWT::forward:input image", (image-128))
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
        

@@ -26,10 +26,10 @@ def read(file_name):
     '''
     image = cv2.imread(file_name, -1)
     if image is None:
-        raise InputFileException('{} not found'.format(file_name))
+        raise InputFileException('IO::image:read: {} not found'.format(file_name))
     else:
         if __debug__:
-            print("image.py: read {}".format(file_name))
+            print("IO::image:read: read {}".format(file_name))
     buf = image.astype(np.float32)
     buf -= 32768.0
     return buf.astype(np.int16)
@@ -61,10 +61,10 @@ def write(image, file_name):
     cv2.imwrite(file_name + ".png", image)
     os.rename(file_name + ".png", file_name)
     if __debug__:
-        print("image.py: written {}".format(file_name + ".png"))
+        print("IO::image:write: written {}".format(file_name + ".png"))
 
 if __name__ == "__main__":
 
     img = read("../../sequences/stockholm/000")
     write(img, "/tmp/000")
-    print("generated /tmp/000")
+    print("IO::image:__main__: generated /tmp/000")

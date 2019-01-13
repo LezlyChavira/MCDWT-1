@@ -29,10 +29,10 @@ def readL(file_name):
     fn = file_name + "_LL"
     LL = cv2.imread(fn, -1)
     if LL is None:
-        raise InputFileException('{} not found'.format(fn))
+        raise InputFileException('IO::decomposition:readL: {} not found'.format(fn))
     else:
         if __debug__:
-            print("decomposition: read {}".format(fn))
+            print("IO::decomposition:readL: read {}".format(fn))
     LL = LL.astype(np.float32)
     LL -= 32768.0
     LL = LL.astype(np.int16)
@@ -42,10 +42,10 @@ def readH(file_name):
     fn = file_name + "_LH"
     LH = cv2.imread(fn, -1)
     if LH is None:
-        raise InputFileException('{} not found'.format(fn))
+        raise InputFileException('IO::decomposition:readH: {} not found'.format(fn))
     else:
         if __debug__:
-            print("decomposition: read {}".format(fn))
+            print("IO::decomposition:readH: read {}".format(fn))
     LH = LH.astype(np.float32)
     LH -= 32768.0
     LH = LH.astype(np.int16)
@@ -53,10 +53,10 @@ def readH(file_name):
     fn = file_name + "_HL"
     HL = cv2.imread(fn, -1)
     if HL is None:
-        raise InputFileException('{} not found'.format(fn))
+        raise InputFileException('IO::decomposition:readH: {} not found'.format(fn))
     else:
         if __debug__:
-            print("decomposition: read {}".format(fn))
+            print("IO::decomposition:readH: read {}".format(fn))
     HL = HL.astype(np.float32)
     HL -= 32768.0
     HL = HL.astype(np.int16)
@@ -64,10 +64,10 @@ def readH(file_name):
     fn = file_name + "_HH"
     HH = cv2.imread(fn, -1)
     if HH is None:
-        raise InputFileException('{} not found'.format(fn))
+        raise InputFileException('IO::decomposition:readH: {} not found'.format(fn))
     else:
         if __debug__:
-            print("decomposition: read {}".format(fn))
+            print("IO::decomposition:readH: read {}".format(fn))
     HH = HH.astype(np.float32)
     HH -= 32768.0
     HH = HH.astype(np.int16)
@@ -124,13 +124,13 @@ def writeL(LL, file_name):
     LL += 32768.0
     LL = LL.astype(np.uint16)
     if __debug__:
-        cv2.imshow("LL subband", (LL-32768+128)*256)
+        cv2.imshow("IO::decomposition:writeL: LL subband", (LL-32768+128)*256)
         while cv2.waitKey(1) & 0xFF != ord('q'):
             time.sleep(0.1)
     cv2.imwrite(file_name + "_LL.png", LL)
     os.rename(file_name + "_LL.png", file_name + "_LL")
     if __debug__:
-        print("decomposition: written {}".format(file_name + "_LL"))
+        print("IO::decomposition:writeL: written {}".format(file_name + "_LL"))
 
 def writeH(H, file_name):
     '''Write the high-frequency subbands H=(LH, HL, HH) to the disk.
@@ -154,7 +154,7 @@ def writeH(H, file_name):
     cv2.imwrite(file_name + "_LH.png", LH)
     os.rename(file_name + "_LH.png", file_name + "_LH")
     if __debug__:
-        print("decomposition: written {}".format(file_name + "_LH"))
+        print("IO::decomposition:writeH: written {}".format(file_name + "_LH"))
 
     HL = H[1].astype(np.float32)
     HL += 32768.0
@@ -162,7 +162,7 @@ def writeH(H, file_name):
     cv2.imwrite(file_name + "_HL.png", HL)
     os.rename(file_name + "_HL.png", file_name + "_HL")
     if __debug__:
-        print("decomposition: written {}".format(file_name + "_HL"))
+        print("IO::decomposition:writeH: written {}".format(file_name + "_HL"))
 
     HH = H[2].astype(np.float32)
     HH += 32768.0
@@ -170,7 +170,7 @@ def writeH(H, file_name):
     cv2.imwrite(file_name + "_HH.png", HH)
     os.rename(file_name + "_HH.png", file_name + "_HH")
     if __debug__:
-        print("decomposition: written {}".format(file_name + "_HH"))
+        print("IO::decomposition:writeH: written {}".format(file_name + "_HH"))
 
 def write(decomposition, file_name):
     '''Write a decomposition to disk.
@@ -205,4 +205,4 @@ if __name__ == "__main__":
     os.system("cp ../../sequences/stockholm/004 /tmp/_HH")
     pyr = read("/tmp/")
     write(pyr, "/tmp/out")
-    print("generated decomposition /tmp/out")
+    print("IO::decomposition:__main__: generated decomposition /tmp/out")

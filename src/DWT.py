@@ -66,7 +66,7 @@ class DWT:
         '''
 
         if __debug__:
-            cv2.imshow("DWT::forward:input image", (image-128))
+            cv2.imshow("DWT::forward:input image", (image+256)*256)
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
        
@@ -85,10 +85,10 @@ class DWT:
             print("LH: max={} min={}".format(np.amax(LH), np.amin(LH)))
             print("HL: max={} min={}".format(np.amax(HL), np.amin(HL)))
             print("HH: max={} min={}".format(np.amax(HH), np.amin(HH)))
-            cv2.imshow("LL", LL/256)
-            cv2.imshow("LH", LH/16)
-            cv2.imshow("HL", HL/16)
-            cv2.imshow("HH", HH/16)
+            cv2.imshow("DWT::forward: LL subband", (LL+256)/256)
+            cv2.imshow("DWT::forward: LH", LH/8)
+            cv2.imshow("DWT::forward: HL", HL/8)
+            cv2.imshow("DWT::forward: HH", HH/8)
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 time.sleep(0.1)
 

@@ -5,14 +5,14 @@
 # import pywt
 # import math
 
-import cv2
+#import cv2
 import numpy as np
 import sys
 
 from DWT import DWT
 sys.path.insert(0, "..")
 from src.IO import image
-from src.IO import pyramid
+from src.IO import decomposition
 from MC.optical.motion import generate_prediction
 
 class MCDWT:
@@ -28,13 +28,13 @@ class MCDWT:
         Input:
         -----
 
-        aL, aH, bL, bH, cL, cH: array[y, x, component], the pyramid of
+        aL, aH, bL, bH, cL, cH: array[y, x, component], the decomposition of
         the images a, b and c.
 
         Output:
         ------
 
-        residue_bH: array[y, x, component], the base of the pyramid of
+        residue_bH: array[y, x, component], the base of the decomposition of
         the residue fot the image b.
 
         '''
@@ -70,8 +70,8 @@ class MCDWT:
         '''A Motion Compensated Discrete Wavelet Transform.
 
         Compute the MC 1D-DWT. The input video s (as a sequence of
-        1-levels pyramids) must be stored in disk and the output (as a
-        1-levels MC pyramids) will be stored in S.
+        1-levels decompositions) must be stored in disk and the output (as a
+        1-levels MC decompositions) will be stored in S.
 
         Imput:
         -----
@@ -109,14 +109,14 @@ class MCDWT:
         x = 2
         for t in range(T): # Temporal scale
             i = 0
-            aL, aH = pyramid.read("{}{:03d}".format(s, 0))
-            pyramid.write((aL, aH), "{}{:03d}".format(S, 0))
+            aL, aH = decomposition.read("{}{:03d}".format(s, 0))
+            decomposition.write((aL, aH), "{}{:03d}".format(S, 0))
             while i < (N//x):
-                bL, bH = pyramid.read("{}{:03d}".format(s, x*i+x//2))
-                cL, cH = pyramid.read("{}{:03d}".format(s, x*i+x))
+                bL, bH = decomposition.read("{}{:03d}".format(s, x*i+x//2))
+                cL, cH = decomposition.read("{}{:03d}".format(s, x*i+x))
                 bH = self.__forward_butterfly(aL, aH, bL, bH, cL, cH)
-                pyramid.write((bL, bH), "{}{:03d}".format(S, x*i+x//2))
-                pyramid.write((cL, cH), "{}{:03d}".format(S, x*i+x))
+                decomposition.write((bL, bH), "{}{:03d}".format(S, x*i+x//2))
+                decomposition.write((cL, cH), "{}{:03d}".format(S, x*i+x))
                 aL, aH = cL, cH
                 i += 1
             x *= 2
@@ -125,14 +125,14 @@ class MCDWT:
         x = 2**T
         for t in range(T): # Temporal scale
             i = 0
-            aL, aH = pyramid.read("{}{:03d}".format(S, 0))
-            pyramid.write((aL, aH), "{}{:03d}".format(s, 0))
+            aL, aH = decomposition.read("{}{:03d}".format(S, 0))
+            decomposition.write((aL, aH), "{}{:03d}".format(s, 0))
             while i < (N//x):
-                bL, bH = pyramid.read("{}{:03d}".format(S, x*i+x//2))
-                cL, cH = pyramid.read("{}{:03d}".format(S, x*i+x))
+                bL, bH = decomposition.read("{}{:03d}".format(S, x*i+x//2))
+                cL, cH = decomposition.read("{}{:03d}".format(S, x*i+x))
                 bH = self.__backward_butterfly(aL, aH, bL, bH, cL, cH)
-                pyramid.write((bL, bH), "{}{:03d}".format(s, x*i+x//2))
-                pyramid.write((cL, cH), "{}{:03d}".format(s, x*i+x))
+                decomposition.write((bL, bH), "{}{:03d}".format(s, x*i+x//2))
+                decomposition.write((cL, cH), "{}{:03d}".format(s, x*i+x))
                 aL, aH = cL, cH
                 i += 1
             x //=2
@@ -142,7 +142,7 @@ class MCDWT:
 
         Compute the MC 1D-DWT. The input video (as a sequence of images)
         must be stored in disk (<input> directory) and the output (as a
-        sequence of DWT coefficients that are called pyramids) will be
+        sequence of DWT coefficients that are called decompositions) will be
         stored in disk (<output> directory).
 
         Arguments
@@ -189,7 +189,7 @@ class MCDWT:
                 dwtA = dwt.forward(A)
                 L_y = dwtA[0].shape[0]
                 L_x = dwtA[0].shape[1]
-                pyramid.write(dwtA, "{}{:03d}_{}".format(prefix, i, k+1))
+                decomposition.write(dwtA, "{}{:03d}_{}".format(prefix, i, k+1))
                 zero_L = np.zeros(dwtA[0].shape, np.float64)
                 zero_H = (zero_L, zero_L, zero_L)
                 AL = dwt.backward(dwtA[0], zero_H)
@@ -206,7 +206,7 @@ class MCDWT:
                     BH = dwt.backward(zero_L, dwtB[1])
                     C = image.read("{}{:03d}_{}".format(prefix, x*i+x, k))
                     dwtC = dwt.forward(C)
-                    pyramid.write(dwtC, "{}{:03d}_{}".format(prefix, x*i+x, k+1))
+                    decomposition.write(dwtC, "{}{:03d}_{}".format(prefix, x*i+x, k+1))
                     CL = dwt.backward(dwtC[0], zero_H)
                     if __debug__:
                         image.write(CL, "{}{:03d}_{}".format(prefix + "_CL_", x*i+x, k))
@@ -232,7 +232,7 @@ class MCDWT:
                         image.write(rBH, "{}{:03d}_{}".format(prefix + "_residue_", x*i+x//2, k))
                     rBH = dwt.forward(rBH)
                     rBH[0][0:L_y,0:L_x,:] = dwtB[0]
-                    pyramid.write(rBH, "{}{:03d}_{}".format(prefix, x*i+x//2, k+1))
+                    decomposition.write(rBH, "{}{:03d}_{}".format(prefix, x*i+x//2, k+1))
                     AL = CL
                     AH = CH
                     i += 1
@@ -242,24 +242,24 @@ class MCDWT:
         '''A (Inverse) Motion Compensated Discrete Wavelet Transform.
 
         iMCDWT is the inverse transform of MCDWT. Inputs a sequence of
-        pyramids and outputs a sequence of images.
+        decompositions and outputs a sequence of images.
 
         Arguments
         ---------
 
             input : str
 
-                Path where the input pyramids are. Example:
+                Path where the input decompositions are. Example:
                 "../input/image".
 
             output : str
 
                 Path where the (inversely transformed) images will
-                be. Example: "../output/pyramid".
+                be. Example: "../output/decomposition".
 
              N : int
 
-                Number of pyramids to process.
+                Number of decompositions to process.
 
              S : int
 
@@ -277,7 +277,7 @@ class MCDWT:
         #import ipdb; ipdb.set_trace()
         ir = image_io.ImageReader()
         iw = image_io.ImageWritter()
-        pr = pyramid_io.PyramidReader()
+        pr = decomposition_io.DecompositionReader()
         x = 2**S
         for s in range(S): # Number of temporal scales
             #import ipdb; ipdb.set_trace()
@@ -322,23 +322,23 @@ if __name__ == "__main__":
         "Examples:\n\n"
         "  rm -rf /tmp/stockholm/\n"
         "  cp -r ../sequences/stockholm/ /tmp/\n"
-        "  python3 -O ./MDWT.py     -i /tmp/stockholm/ -p /tmp/stockholm_\n"
-        "  python3 -O ./MCDWT.py    -p /tmp/stockholm_ -m /tmp/mc_stockholm_ # Forward transform\n"
-        "  python3 -O ./MCDWT.py -b -p /tmp/stockholm_ -m /tmp/mc_stockholm_ # Backward transform\n"
-        "  python3 -O ./MDWT.py  -b -i /tmp/stockholm_ -p /tmp/stockholm_\n",
+        "  ./MDWT.py     -i /tmp/stockholm/ -d /tmp/stockholm_\n"
+        "  ./MCDWT.py    -d /tmp/stockholm_ -m /tmp/mc_stockholm_ # Forward transform\n"
+        "  ./MCDWT.py -b -d /tmp/stockholm_ -m /tmp/mc_stockholm_ # Backward transform\n"
+        "  ./MDWT.py  -b -i /tmp/stockholm_ -d /tmp/stockholm_\n",
         formatter_class=CustomFormatter)
 
     parser.add_argument("-b", "--backward", action='store_true',
                         help="Performs backward transform")
 
-    parser.add_argument("-p", "--pyramids",
-                        help="Sequence of pyramids", default="/tmp/stockholm_")
+    parser.add_argument("-d", "--decompositions",
+                        help="Sequence of decompositions", default="/tmp/stockholm_")
 
-    parser.add_argument("-m", "--mc_pyramids",
-                        help="Sequence of motion compensated pyramids", default="/tmp/mc_stockholm_")
+    parser.add_argument("-m", "--mc_decompositions",
+                        help="Sequence of motion compensated decompositions", default="/tmp/mc_stockholm_")
 
     parser.add_argument("-N",
-                        help="Number of pyramids", default=5, type=int)
+                        help="Number of decompositions", default=5, type=int)
 
     parser.add_argument("-T",
                         help="Number of temporal levels", default=2, type=int)
@@ -349,15 +349,15 @@ if __name__ == "__main__":
         if __debug__:
             print("Backward transform")
 
-        p = pyramid.readL("{}000".format(args.mc_pyramids))
+        p = decomposition.readL("{}000".format(args.mc_decompositions))
         d = MCDWT(p.shape)
 
-        d.backward(args.mc_pyramids, args.pyramids, args.N, args.T)
+        d.backward(args.mc_decompositions, args.decompositions, args.N, args.T)
     else:
         if __debug__:
             print("Forward transform")
 
-        p = pyramid.readL("{}000".format(args.pyramids))
+        p = decomposition.readL("{}000".format(args.decompositions))
         d = MCDWT(p.shape)
 
-        p = d.forward(args.pyramids, args.mc_pyramids, args.N, args.T)
+        p = d.forward(args.decompositions, args.mc_decompositions, args.N, args.T)

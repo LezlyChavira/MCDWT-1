@@ -11,7 +11,7 @@ import sys
 from DWT import DWT
 sys.path.insert(0, "..")
 from src.IO import image
-from src.IO import pyramid
+from src.IO import decomposition
 
 class MDWT:
 
@@ -31,23 +31,23 @@ class MDWT:
         Output:
         ------
 
-            S: the sequence of pyramids (transformed images).
+            S: the sequence of decompositions (transformed images).
 
         '''
         for i in range(N):
             img = image.read("{}{:03d}".format(s, i))
             pyr = self.dwt.forward(img)
-            pyramid.write(pyr, "{}{:03d}".format(S, i))
+            decomposition.write(pyr, "{}{:03d}".format(S, i))
 
     def backward(self, S="/tmp/stockholm_", s="/tmp/stockholm_", N=5):
-        ''' Motion 1-iteration forward 2D DWT of a sequence of pyramids.
+        ''' Motion 1-iteration forward 2D DWT of a sequence of decompositions.
 
-        Compute the inverse 2D-DWT of each pyramid of the sequence S.
+        Compute the inverse 2D-DWT of each decomposition of the sequence S.
 
         Input:
         -----
 
-            S: the sequence of pyramids to be transformed.
+            S: the sequence of decompositions to be transformed.
 
         Output:
         ------
@@ -57,7 +57,7 @@ class MDWT:
         '''
 
         for i in range(N):
-            pyr = pyramid.read("{}{:03d}".format(S, i))
+            pyr = decomposition.read("{}{:03d}".format(S, i))
             img = self.dwt.backward(pyr)
             image.write(img, "{}{:03d}".format(s, i))
 
@@ -73,8 +73,8 @@ if __name__ == "__main__":
         "Examples:\n\n"
         "  rm -rf /tmp/stockholm/\n"
         "  cp -r ../sequences/stockholm/ /tmp/\n"
-        "  ./MDWT.py    -i /tmp/stockholm/ -p /tmp/stockholm_ # Forward transform\n"
-        "  ./MDWT.py -b -i /tmp/stockholm_ -p /tmp/stockholm_ # Backward transform\n",
+        "  ./MDWT.py    -i /tmp/stockholm/ -d /tmp/stockholm_ # Forward transform\n"
+        "  ./MDWT.py -b -i /tmp/stockholm_ -d /tmp/stockholm_ # Backward transform\n",
         formatter_class=CustomFormatter)
 
     parser.add_argument("-b", "--backward", action='store_true',
@@ -83,11 +83,11 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--images",
                         help="Sequence of images", default="/tmp/stockholm/")
 
-    parser.add_argument("-p", "--pyramids",
-                        help="Sequence of pyramids", default="/tmp/stockholm_")
+    parser.add_argument("-d", "--decompositions",
+                        help="Sequence of decompositions", default="/tmp/stockholm_")
 
     parser.add_argument("-N",
-                        help="Number of images/pyramids", default=5, type=int)
+                        help="Number of images/decompositions", default=5, type=int)
 
     args = parser.parse_args()
 
@@ -95,8 +95,8 @@ if __name__ == "__main__":
     if args.backward:
         if __debug__:
             print("Backward transform")
-        d.backward(args.pyramids, args.images, args.N)
+        d.backward(args.decompositions, args.images, args.N)
     else:
         if __debug__:
             print("Forward transform")
-        p = d.forward(args.images, args.pyramids, args.N)
+        p = d.forward(args.images, args.decompositions, args.N)

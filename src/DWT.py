@@ -6,13 +6,10 @@
 #!/bin/sh
 ''''exec python3 -O -- "$0" ${1+"$@"} # '''
 
-import cv2
 import numpy as np
 import pywt
 import math
 import sys
-if __debug__:
-    import time
 
 sys.path.insert(0, "..")
 from src.IO import image
@@ -65,11 +62,6 @@ class DWT:
 
         '''
 
-        if __debug__:
-            cv2.imshow("DWT::forward:input image", (image-np.amin(image))/(np.amax(image)-np.amin(image)))
-            while cv2.waitKey(1) & 0xFF != ord('q'):
-                time.sleep(0.1)
-       
         y = math.ceil(image.shape[0]/2)
         x = math.ceil(image.shape[1]/2)
         LL = np.ndarray((y, x, 3), np.float64)
@@ -85,12 +77,6 @@ class DWT:
             print("DWT::forward: LH: max={} min={}".format(np.amax(LH), np.amin(LH)))
             print("DWT::forward: HL: max={} min={}".format(np.amax(HL), np.amin(HL)))
             print("DWT::forward: HH: max={} min={}".format(np.amax(HH), np.amin(HH)))
-            cv2.imshow("DWT::forward: LL subband", (LL-np.amin(LL))/(np.amax(LL)-np.amin(LL)))
-            cv2.imshow("DWT::forward: LH", LH/8)
-            cv2.imshow("DWT::forward: HL", HL/8)
-            cv2.imshow("DWT::forward: HH", HH/8)
-            while cv2.waitKey(1) & 0xFF != ord('q'):
-                time.sleep(0.1)
 
         decomposition = LL, (LH, HL, HH)
         return decomposition
@@ -113,20 +99,9 @@ class DWT:
         LH = decomposition[1][0]
         HL = decomposition[1][1]
         HH = decomposition[1][2]
-        if __debug__:
-            cv2.imshow("LL subband", (LL-np.amin(LL))/(np.amax(LL)-np.amin(LL)))
-            cv2.imshow("LH subband", LH/8)
-            cv2.imshow("HL subband", HL/8)
-            cv2.imshow("HH subband", HH/8)
-            while cv2.waitKey(1) & 0xFF != ord('q'):
-                time.sleep(0.1)
         image = np.ndarray((LL.shape[0]*2, LL.shape[1]*2, 3), np.float64)
         for c in range(3):
             image[:,:,c] = pywt.idwt2((LL[:,:,c], (LH[:,:,c], HL[:,:,c], HH[:,:,c])), 'db5', mode='per')
-        if __debug__:
-            cv2.imshow("image decomposition", image/256)
-            while cv2.waitKey(1) & 0xFF != ord('q'):
-                time.sleep(0.1)
         return image
 
 if __name__ == "__main__":

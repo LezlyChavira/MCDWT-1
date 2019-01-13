@@ -7,6 +7,9 @@ if __debug__:
 class InputFileException(Exception):
     pass
 
+def normalize(x):
+    return ((x - np.amin(x)) / (np.amax(x) - np.amin(x)))
+
 def readL(file_name):
     '''Read a 3-components LL-subband from disk. Each component stores
        integers between [0, 65535].
@@ -36,6 +39,14 @@ def readL(file_name):
     LL = LL.astype(np.float32)
     LL -= 32768.0
     LL = LL.astype(np.int16)
+
+    if __debug__:
+        cv2.imshow("IO::decomposition:readL: LL subband", normalize(LL))
+
+    if __debug__:
+        while cv2.waitKey(1) & 0xFF != ord('q'):
+            time.sleep(0.1)
+
     return LL
 
 def readH(file_name):
@@ -50,6 +61,9 @@ def readH(file_name):
     LH -= 32768.0
     LH = LH.astype(np.int16)
 
+    if __debug__:
+        cv2.imshow("IO::decomposition:readH: LH subband", normalize(LH))
+
     fn = file_name + "_HL"
     HL = cv2.imread(fn, -1)
     if HL is None:
@@ -61,6 +75,9 @@ def readH(file_name):
     HL -= 32768.0
     HL = HL.astype(np.int16)
 
+    if __debug__:
+        cv2.imshow("IO::decomposition:readH: HL subband", normalize(HL))
+
     fn = file_name + "_HH"
     HH = cv2.imread(fn, -1)
     if HH is None:
@@ -71,6 +88,13 @@ def readH(file_name):
     HH = HH.astype(np.float32)
     HH -= 32768.0
     HH = HH.astype(np.int16)
+
+    if __debug__:
+        cv2.imshow("IO::decomposition:readH: HH subband", normalize(HH))
+
+    if __debug__:
+        while cv2.waitKey(1) & 0xFF != ord('q'):
+            time.sleep(0.1)
 
     return LH, HL, HH
 
@@ -124,16 +148,15 @@ def writeL(LL, file_name):
     LL += 32768.0
     LL = LL.astype(np.uint16)
     if __debug__:
-        cv2.imshow("IO::decomposition:writeL: LL subband", (LL-np.amin(LL))/(np.amax(LL)-np.amin(LL)))
-#        for y in range(10):
-#            for x in range(10):
-#                print((LL[y+50, x+50, 0]-32768+128)*256, " ", end="")
-        while cv2.waitKey(1) & 0xFF != ord('q'):
-            time.sleep(0.1)
+        cv2.imshow("IO::decomposition:writeL: LL subband", normalize(LL))
     cv2.imwrite(file_name + "_LL.png", LL)
     os.rename(file_name + "_LL.png", file_name + "_LL")
     if __debug__:
         print("IO::decomposition:writeL: written {}".format(file_name + "_LL"))
+
+    if __debug__:
+        while cv2.waitKey(1) & 0xFF != ord('q'):
+            time.sleep(0.1)
 
 def writeH(H, file_name):
     '''Write the high-frequency subbands H=(LH, HL, HH) to the disk.
@@ -154,6 +177,8 @@ def writeH(H, file_name):
     LH = H[0].astype(np.float32)
     LH += 32768.0
     LH = LH.astype(np.uint16)
+    if __debug__:
+        cv2.imshow("IO::decomposition:writeH: LH subband", normalize(LH))
     cv2.imwrite(file_name + "_LH.png", LH)
     os.rename(file_name + "_LH.png", file_name + "_LH")
     if __debug__:
@@ -162,6 +187,8 @@ def writeH(H, file_name):
     HL = H[1].astype(np.float32)
     HL += 32768.0
     HL = HL.astype(np.uint16)
+    if __debug__:
+        cv2.imshow("IO::decomposition:writeH: HL subband", normalize(HL))
     cv2.imwrite(file_name + "_HL.png", HL)
     os.rename(file_name + "_HL.png", file_name + "_HL")
     if __debug__:
@@ -170,10 +197,16 @@ def writeH(H, file_name):
     HH = H[2].astype(np.float32)
     HH += 32768.0
     HH = HH.astype(np.uint16)
+    if __debug__:
+        cv2.imshow("IO::decomposition:writeH: HH subband", normalize(HH))
     cv2.imwrite(file_name + "_HH.png", HH)
     os.rename(file_name + "_HH.png", file_name + "_HH")
     if __debug__:
         print("IO::decomposition:writeH: written {}".format(file_name + "_HH"))
+
+    if __debug__:
+        while cv2.waitKey(1) & 0xFF != ord('q'):
+            time.sleep(0.1)
 
 def write(decomposition, file_name):
     '''Write a decomposition to disk.
